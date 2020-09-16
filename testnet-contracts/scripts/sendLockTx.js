@@ -17,10 +17,10 @@ module.exports = async () => {
    ******************************************/
   // Lock transaction default params
   const DEFAULT_COSMOS_RECIPIENT = Web3.utils.utf8ToHex(
-    'cosmos1pgkwvwezfy3qkh99hjnf35ek3znzs79mwqf48y'
+    'cosmos1hxkey7yhmtpvs8h9ud0yly4wn3872wyate5cx6'
   );
   const DEFAULT_ETH_DENOM = 'eth';
-  const DEFAULT_AMOUNT = '1000000000000000000';
+  const DEFAULT_AMOUNT = '1000';
 
   // Config values
   const NETWORK_ROPSTEN = process.argv[4] === '--network' && process.argv[5] === 'ropsten';

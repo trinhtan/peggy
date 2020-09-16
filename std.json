@@ -1,0 +1,13 @@
+{
+  "base_req": { "from": "cosmos1fy4vqc47tdfstrmrhfellnfr082s7madpc5cr0", "chain_id": "peggy" },
+  "ethereum_chain_id": "3",
+  "amount": "100",
+  "bridge_registry_contract": "0x14d268ed94340f757b253CdeBd3b3528B83aBdb1",
+  "nonce": "5",
+  "symbol": "eth",
+  "token_contract_address": "0x0000000000000000000000000000000000000000",
+  "ethereum_sender": "0x8f287eA4DAD62A3A626942d149509D6457c2516C",
+  "validator": "cosmos1fy4vqc47tdfstrmrhfellnfr082s7madpc5cr0",
+  "cosmos_receiver": "cosmos1xf5940g7mrrl00n2380cu736z89pevddw7frku",
+  "claim_type": "lock"
+}

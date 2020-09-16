@@ -1,0 +1,25 @@
+{
+  "type": "cosmos-sdk/StdTx",
+  "value": {
+    "msg": [
+      {
+        "type": "ethbridge/MsgCreateEthBridgeClaim",
+        "value": {
+          "ethereum_chain_id": "3",
+          "bridge_registry_contract_address": "0x14d268ed94340f757b253CdeBd3b3528B83aBdb1",
+          "nonce": "1",
+          "symbol": "eth",
+          "token_contract_address": "0x0000000000000000000000000000000000000000",
+          "ethereum_sender": "0x8f287eA4DAD62A3A626942d149509D6457c2516C",
+          "cosmos_receiver": "cosmos1pgkwvwezfy3qkh99hjnf35ek3znzs79mwqf48y",
+          "validator_address": "cosmosvaloper1fy4vqc47tdfstrmrhfellnfr082s7madyvqd0u",
+          "amount": "1",
+          "claim_type": "lock"
+        }
+      }
+    ],
+    "fee": { "amount": [], "gas": "200000" },
+    "signatures": null,
+    "memo": ""
+  }
+}
