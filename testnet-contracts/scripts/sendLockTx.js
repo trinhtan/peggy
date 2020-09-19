@@ -21,7 +21,7 @@ module.exports = async () => {
    ******************************************/
   // Lock transaction default params
   const DEFAULT_COSMOS_RECIPIENT = Web3.utils.utf8ToHex(
-    'cosmos105takfh8wrsan3faey2gwwnkvplfdlhmuxc9z3'
+    'cosmos1l7k86et6jshyvxpk48l0g27qzdf554x0qkheud'
   );
   const DEFAULT_ETH_DENOM = 'eth';
   const DEFAULT_AMOUNT = '1000';

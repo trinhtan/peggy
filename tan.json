@@ -1,0 +1,29 @@
+{
+  "type": "cosmos-sdk/StdTx",
+  "value": {
+    "msg": [
+      {
+        "type": "ethbridge/MsgBurn",
+        "value": {
+          "cosmos_sender": "cosmos1l7k86et6jshyvxpk48l0g27qzdf554x0qkheud",
+          "amount": "100",
+          "symbol": "peggyeth",
+          "ethereum_chain_id": "3",
+          "ethereum_receiver": "0xf68F0c27D90bDcde125724D390fF75b3635FF0Ab"
+        }
+      }
+    ],
+    "fee": { "amount": [], "gas": "200000" },
+    "signatures": null,
+    "memo": ""
+  },
+  "signatures": [
+    {
+      "signature": "7hKF8I+fzor5StDHMAK05Mg9L7XQ967n7T3G1De6PtwLplscvoz7k+DvVvIbwWIva6Q1NfkCrVy4v7IuWeZpuw==",
+      "pub_key": {
+        "type": "tendermint/PubKeySecp256k1",
+        "value": "An0kjE4dpcbZHDrJimdzCVjxP+TctJfkFLzTYP/XqpIA"
+      }
+    }
+  ]
+}

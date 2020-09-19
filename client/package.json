@@ -1,0 +1,13 @@
+{
+  "name": "peggy-client",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@cosmostation/cosmosjs": "^0.5.8",
+    "@tendermint/sig": "^0.6.0",
+    "bn.js": "^5.1.3",
+    "crypto": "^1.0.1",
+    "elliptic": "^6.5.3"
+  }
+}
