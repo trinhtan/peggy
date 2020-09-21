@@ -17,10 +17,10 @@ module.exports = async () => {
    ******************************************/
   // Lock transaction default params
   const DEFAULT_COSMOS_RECIPIENT = Web3.utils.utf8ToHex(
-    'cosmos1pgkwvwezfy3qkh99hjnf35ek3znzs79mwqf48y'
+    'cosmos1t2yl9fs5tylc8lnkqhqp6fg46d9haqk7tuehe3'
   );
   const DEFAULT_DAI_DENOM = 'dai';
-  const DEFAULT_AMOUNT = '1000000000000000000';
+  const DEFAULT_AMOUNT = '1000';
 
   // Config values
   const NETWORK_ROPSTEN = process.argv[4] === '--network' && process.argv[5] === 'ropsten';
@@ -110,7 +110,7 @@ module.exports = async () => {
       gas: 300000 // 300,000 Gwei
     });
 
-    console.log(approveLogs);
+    // console.log(approveLogs);
 
     // Send lock transaction
     console.log('Connecting to contract....');
