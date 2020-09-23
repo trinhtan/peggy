@@ -3,10 +3,10 @@ package ethbridge
 import (
 	"encoding/json"
 
-	"github.com/trinhtan/peggy/x/ethbridge/client"
-	"github.com/trinhtan/peggy/x/ethbridge/types"
 	"github.com/gorilla/mux"
 	"github.com/spf13/cobra"
+	"github.com/trinhtan/peggy/x/ethbridge/client"
+	"github.com/trinhtan/peggy/x/ethbridge/types"
 
 	abci "github.com/tendermint/tendermint/abci/types"
 
@@ -89,12 +89,11 @@ func NewAppModule(
 	return AppModule{
 		AppModuleBasic:      AppModuleBasic{},
 		AppModuleSimulation: AppModuleSimulation{},
-
-		OracleKeeper:  oracleKeeper,
-		SupplyKeeper:  supplyKeeper,
-		AccountKeeper: accountKeeper,
-		BridgeKeeper:  bridgeKeeper,
-		Codec:         cdc,
+		OracleKeeper:        oracleKeeper,
+		SupplyKeeper:        supplyKeeper,
+		AccountKeeper:       accountKeeper,
+		BridgeKeeper:        bridgeKeeper,
+		Codec:               cdc,
 	}
 }
 

@@ -1,7 +1,6 @@
 package types
 
 import (
-	"encoding/json"
 	"fmt"
 	"strconv"
 	"strings"
@@ -71,12 +70,8 @@ func (msg MsgLock) ValidateBasic() error {
 
 // GetSignBytes encodes the message for signing
 func (msg MsgLock) GetSignBytes() []byte {
-	b, err := json.Marshal(msg)
-	if err != nil {
-		panic(err)
-	}
-
-	return sdk.MustSortJSON(b)
+	bz := ModuleCdc.MustMarshalJSON(msg)
+	return sdk.MustSortJSON(bz)
 }
 
 // GetSigners defines whose signature is required
@@ -146,12 +141,8 @@ func (msg MsgBurn) ValidateBasic() error {
 
 // GetSignBytes encodes the message for signing
 func (msg MsgBurn) GetSignBytes() []byte {
-	b, err := json.Marshal(msg)
-	if err != nil {
-		panic(err)
-	}
-
-	return sdk.MustSortJSON(b)
+	bz := ModuleCdc.MustMarshalJSON(msg)
+	return sdk.MustSortJSON(bz)
 }
 
 // GetSigners defines whose signature is required
@@ -205,11 +196,8 @@ func (msg MsgCreateEthBridgeClaim) ValidateBasic() error {
 
 // GetSignBytes encodes the message for signing
 func (msg MsgCreateEthBridgeClaim) GetSignBytes() []byte {
-	b, err := json.Marshal(msg)
-	if err != nil {
-		panic(err)
-	}
-	return sdk.MustSortJSON(b)
+	bz := ModuleCdc.MustMarshalJSON(msg)
+	return sdk.MustSortJSON(bz)
 }
 
 // GetSigners defines whose signature is required

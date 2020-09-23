@@ -1,0 +1,16 @@
+[
+  {
+    "name": "validator",
+    "type": "local",
+    "address": "cosmos15ksw0te2etsmacrpqr24jg5xcxruu3w6amthvs",
+    "pubkey": "cosmospub1addwnpepqf7ljwgckqw8fwy6lkke7ak9u30gtwly70j08xe6uaukne4yvkj8kt8qxt3",
+    "mnemonic": "phone auto lava recipe melody become patient near educate explain twelve rail level cost attend canvas trick blue river flavor ring goddess spray chef"
+  },
+  {
+    "name": "testuser",
+    "type": "local",
+    "address": "cosmos1jj326w6850dlkcksxlsvaxtal438cx62xkr80y",
+    "pubkey": "cosmospub1addwnpepq23ccqu5zrth6s6muer7dvm8sqt8h0ztxch3geatdp4at0h2cmk8v532g04",
+    "mnemonic": "basic nice liberty situate viable riot young length vivid universe sunset invest victory glue moon atom excuse action shrimp price session steel sauce hard"
+  }
+]

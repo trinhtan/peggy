@@ -1,0 +1,20 @@
+{
+  "type": "cosmos-sdk/StdTx",
+  "value": {
+    "msg": [
+      {
+        "type": "ethbridge/MsgBurn",
+        "value": {
+          "cosmos_sender": "cosmos1t2yl9fs5tylc8lnkqhqp6fg46d9haqk7tuehe3",
+          "amount": "100",
+          "symbol": "peggyeth",
+          "ethereum_chain_id": "3",
+          "ethereum_receiver": "0xf68F0c27D90bDcde125724D390fF75b3635FF0Ab"
+        }
+      }
+    ],
+    "fee": { "amount": [], "gas": "200000" },
+    "signatures": null,
+    "memo": ""
+  }
+}
