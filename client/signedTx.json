@@ -1,0 +1,36 @@
+{
+  "type": "cosmos-sdk/StdTx",
+  "value": {
+    "msg": [
+      {
+        "type": "ethbridge/MsgCreateEthBridgeClaim",
+        "value": {
+          "ethereum_chain_id": "3",
+          "bridge_registry_contract_address": "0x22B5DB062B42d7D090fff36d1C44764283F3bD6B",
+          "nonce": "0",
+          "symbol": "eth",
+          "token_contract_address": "0x0000000000000000000000000000000000000000",
+          "ethereum_sender": "0xf68F0c27D90bDcde125724D390fF75b3635FF0Ab",
+          "cosmos_receiver": "cosmos1lxps2sls4gha9xrwr38h0x7mzc7xgvq79xpw3y",
+          "validator_address": "cosmosvaloper1evqnkf5eewsv8qe0fk0k6zed88kvf0t08gfqxu",
+          "amount": "100",
+          "claim_type": "lock"
+        }
+      }
+    ],
+    "fee": {
+      "amount": [],
+      "gas": "200000"
+    },
+    "signatures": [
+      {
+        "pub_key": {
+          "type": "tendermint/PubKeySecp256k1",
+          "value": "AnOl3q+BDftVZqeFbR+wc9OzkBMQkLSNLo4tKxaSG0wR"
+        },
+        "signature": "F6b6iZyGl+IkBIsys5Uz/HAW6zsADG3IzLIpuzyVRA9WeqRP1SODRCnrvMq2vnZJwbKF2c/Zl5Yt+VbOTei18Q=="
+      }
+    ],
+    "memo": ""
+  }
+}

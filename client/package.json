@@ -4,6 +4,9 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "@cosmjs/launchpad": "^0.22.3"
+    "@cosmjs/launchpad": "^0.22.0-alpha.0",
+    "bech32": "^1.1.4",
+    "elliptic": "^6.5.3",
+    "secp256k1": "^4.0.2"
   }
 }

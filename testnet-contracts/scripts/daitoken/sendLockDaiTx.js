@@ -17,7 +17,7 @@ module.exports = async () => {
    ******************************************/
   // Lock transaction default params
   const DEFAULT_COSMOS_RECIPIENT = Web3.utils.utf8ToHex(
-    'cosmos1t2yl9fs5tylc8lnkqhqp6fg46d9haqk7tuehe3'
+    'cosmos1qxam4g7dvrrdw3p3y2mj5x04jstacqklpx0zh6'
   );
   const DEFAULT_DAI_DENOM = 'dai';
   const DEFAULT_AMOUNT = '1000';
@@ -109,8 +109,6 @@ module.exports = async () => {
       value: 0,
       gas: 300000 // 300,000 Gwei
     });
-
-    // console.log(approveLogs);
 
     // Send lock transaction
     console.log('Connecting to contract....');

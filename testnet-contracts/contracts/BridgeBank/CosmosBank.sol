@@ -3,7 +3,6 @@ pragma solidity ^0.5.0;
 import "../../../node_modules/openzeppelin-solidity/contracts/math/SafeMath.sol";
 import "./BridgeToken.sol";
 
-
 /**
  * @title CosmosBank
  * @dev Manages the deployment and minting of ERC20 compatible BridgeTokens
@@ -133,7 +132,10 @@ contract CosmosBank {
 
         // Mint bridge tokens
         require(
-            BridgeToken(_bridgeTokenAddress).mint(_intendedRecipient, _amount),
+            BridgeToken(_bridgeTokenAddress).mint(
+                _intendedRecipient,
+                _amount * 10**18
+            ),
             "Attempted mint of bridge tokens failed"
         );
 
@@ -141,13 +143,13 @@ contract CosmosBank {
             _cosmosSender,
             _intendedRecipient,
             _bridgeTokenAddress,
-            _amount
+            _amount * 10**18
         );
 
         emit LogBridgeTokenMint(
             _bridgeTokenAddress,
             _symbol,
-            _amount,
+            _amount * 10**18,
             _intendedRecipient
         );
     }
@@ -175,7 +177,12 @@ contract CosmosBank {
     function getCosmosDeposit(bytes32 _id)
         internal
         view
-        returns (bytes memory, address payable, address, uint256)
+        returns (
+            bytes memory,
+            address payable,
+            address,
+            uint256
+        )
     {
         CosmosDeposit memory deposit = cosmosDeposits[_id];
 

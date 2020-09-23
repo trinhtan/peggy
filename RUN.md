@@ -33,8 +33,8 @@ ebcli config indent true
 ebcli config output json
 
 # Create a key to hold your validator account and for another test account
-ebcli keys add validator
-ebcli keys add testuser
+ebcli keys add validator --output json > validator.json
+ebcli keys add testuser --output json > testuser.json
 
 # Initialize the genesis account and transaction
 ebd add-genesis-account $(ebcli keys show validator -a) 1000000000stake,1000000000atom
@@ -49,7 +49,7 @@ ebd collect-gentxs
 
 ```
 
-ebd start --pruning default
+ebd start
 
 ```
 
@@ -170,6 +170,14 @@ chạy lệnh sau
 ```
 
 ebcli tx ethbridge burn \$(ebcli keys show testuser -a) [địa chỉ ethereum nhận] 1000000000000000000 peggyeth --ethereum-chain-id=3 --from=testuser --yes
+
+```
+
+
+### 6. Chay rest server
+```
+
+ebcli rest-server --unsafe-cors
 
 ```
 
