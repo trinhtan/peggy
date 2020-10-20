@@ -158,7 +158,8 @@ contract CosmosBridge {
             symbol = _symbol;
             tokenAddress = bridgeBank.getLockedTokenAddress(_symbol);
         } else if (_claimType == ClaimType.Lock) {
-            symbol = concat(COSMOS_NATIVE_ASSET_PREFIX, _symbol); // Add 'PEGGY' symbol prefix
+            // symbol = concat(COSMOS_NATIVE_ASSET_PREFIX, _symbol); // Add 'PEGGY' symbol prefix
+            symbol = _symbol;
             address bridgeTokenAddress = bridgeBank.getBridgeToken(symbol);
             if (bridgeTokenAddress == address(0)) {
                 // First lock of this asset, deploy new contract and get new symbol/token address

@@ -10,17 +10,17 @@ module.exports = async () => {
   const contract = truffleContract(require('../../build/contracts/BridgeBank.json'));
   const daiJSON = require('./dai.json');
 
-  const DAI_ADDRESS = '0xad6d458402f60fd3bd25163575031acdce07538d';
+  const DAI_ADDRESS = '0x3b5736bfff4448e2a6137b4d8ea19382b53e6f72';
 
   /*******************************************
    *** Constants
    ******************************************/
   // Lock transaction default params
   const DEFAULT_COSMOS_RECIPIENT = Web3.utils.utf8ToHex(
-    'cosmos1qxam4g7dvrrdw3p3y2mj5x04jstacqklpx0zh6'
+    'cosmos1t7sej8t0530sr304lsfruh4vdunl5herazfqtr'
   );
-  const DEFAULT_DAI_DENOM = 'dai';
-  const DEFAULT_AMOUNT = '1000';
+  const DEFAULT_DAI_DENOM = 'STAKE';
+  const DEFAULT_AMOUNT = '100';
 
   // Config values
   const NETWORK_ROPSTEN = process.argv[4] === '--network' && process.argv[5] === 'ropsten';
@@ -72,7 +72,7 @@ module.exports = async () => {
   }
 
   // Convert default 'dai' coin denom into dai address
-  if (coinDenom == 'dai') {
+  if (coinDenom == 'STAKE') {
     coinDenom = DAI_ADDRESS;
   }
 
@@ -83,13 +83,12 @@ module.exports = async () => {
   let provider;
   if (NETWORK_ROPSTEN) {
     provider = new HDWalletProvider(
-      process.env.MNEMONIC,
+      '79fe21bba0ceac480c2ff7e6acbcdbe0c178049c908932aebffb316c6ed62d6c',
       'https://ropsten.infura.io/v3/'.concat(process.env.INFURA_PROJECT_ID)
     );
   } else {
     provider = new Web3.providers.HttpProvider(process.env.LOCAL_PROVIDER);
   }
-  console.log(process.env.INFURA_PROJECT_ID);
 
   const web3 = new Web3(provider);
   contract.setProvider(web3.currentProvider);
@@ -105,7 +104,7 @@ module.exports = async () => {
     // sender approve Bridge Bank use DAI
     console.log('Aprove for Bridge Bank');
     await daiContract.methods.approve(contract.networks['3'].address, amount).send({
-      from: '0x8f287eA4DAD62A3A626942d149509D6457c2516C',
+      from: '0xf68F0c27D90bDcde125724D390fF75b3635FF0Ab',
       value: 0,
       gas: 300000 // 300,000 Gwei
     });
@@ -115,7 +114,7 @@ module.exports = async () => {
     const { logs } = await contract.deployed().then(function (instance) {
       console.log('Connected to contract, sending lock...');
       return instance.lock(cosmosRecipient, coinDenom, amount, {
-        from: '0x8f287eA4DAD62A3A626942d149509D6457c2516C',
+        from: '0xf68F0c27D90bDcde125724D390fF75b3635FF0Ab',
         value: 0,
         gas: 300000 // 300,000 Gwei
       });

@@ -124,18 +124,18 @@ func (msg MsgBurn) ValidateBasic() error {
 	if msg.Amount <= 0 {
 		return ErrInvalidAmount
 	}
-	prefixLength := len(PeggedCoinPrefix)
-	if len(msg.Symbol) <= prefixLength+1 {
-		return ErrInvalidBurnSymbol
-	}
-	symbolPrefix := msg.Symbol[:prefixLength]
-	if symbolPrefix != PeggedCoinPrefix {
-		return ErrInvalidBurnSymbol
-	}
-	symbolSuffix := msg.Symbol[prefixLength:]
-	if len(symbolSuffix) == 0 {
-		return ErrInvalidBurnSymbol
-	}
+	// prefixLength := len(PeggedCoinPrefix)
+	// if len(msg.Symbol) <= prefixLength+1 {
+	// 	return ErrInvalidBurnSymbol
+	// }
+	// symbolPrefix := msg.Symbol[:prefixLength]
+	// if symbolPrefix != PeggedCoinPrefix {
+	// 	return ErrInvalidBurnSymbol
+	// }
+	// symbolSuffix := msg.Symbol[prefixLength:]
+	// if len(symbolSuffix) == 0 {
+	// 	return ErrInvalidBurnSymbol
+	// }
 	return nil
 }
 

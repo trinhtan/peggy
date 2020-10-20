@@ -58,7 +58,8 @@ func (k Keeper) ProcessSuccessfulClaim(ctx sdk.Context, claim string) error {
 	var coins sdk.Coins
 	switch oracleClaim.ClaimType {
 	case types.LockText:
-		symbol := fmt.Sprintf("%v%v", types.PeggedCoinPrefix, oracleClaim.Symbol)
+		// symbol := fmt.Sprintf("%v%v", types.PeggedCoinPrefix, oracleClaim.Symbol)
+		symbol := fmt.Sprintf("%v", oracleClaim.Symbol)
 		coins = sdk.Coins{sdk.NewInt64Coin(symbol, oracleClaim.Amount)}
 		err = k.supplyKeeper.MintCoins(ctx, types.ModuleName, coins)
 	case types.BurnText:

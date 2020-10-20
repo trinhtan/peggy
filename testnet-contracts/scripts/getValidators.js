@@ -5,7 +5,7 @@ module.exports = async () => {
     require("dotenv").config();
     const Web3 = require("web3");
     const HDWalletProvider = require("@truffle/hdwallet-provider");
-    const BigNumber = require("bignumber.js")
+    const BigNumber = require("bignumber.js");
 
     // Contract abstraction
     const truffleContract = require("truffle-contract");
@@ -26,7 +26,7 @@ module.exports = async () => {
     let provider;
     if (NETWORK_ROPSTEN) {
         provider = new HDWalletProvider(
-            process.env.MNEMONIC,
+            process.env.PRIVATE_KEY,
             "https://ropsten.infura.io/v3/".concat(process.env.INFURA_PROJECT_ID)
         );
     } else {
@@ -44,7 +44,7 @@ module.exports = async () => {
          ******************************************/
         await contract.deployed().then(async function (instance) {
             for (let i = 0; i < accounts.length; i++) {
-                console.log("Trying " + accounts[i] + "...")
+                console.log("Trying " + accounts[i] + "...");
                 const isValidator = await instance.isActiveValidator(accounts[i], {
                     from: accounts[0],
                     value: 0,
@@ -56,11 +56,11 @@ module.exports = async () => {
                         value: 0,
                         gas: 300000 // 300,000 Gwei
                     }));
-                    console.log("Validator " + accounts[i] + " is active! Power:", power.c[0])
+                    console.log("Validator " + accounts[i] + " is active! Power:", power.c[0]);
                 }
             }
         });
     } catch (error) {
-        console.error({ error })
+        console.error({ error });
     }
 };

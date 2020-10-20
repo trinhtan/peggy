@@ -195,13 +195,14 @@ exports.transferERC20FromCosmosToEthereum = async function (
       cosmos_sender: address,
       ethereum_receiver: ethereumReceiver,
       amount: amount,
-      symbol: PEGGY_PREFIX + symbol
+      symbol: symbol
     };
 
     const req = { base_req, ...body };
     const { data } = await axios.post(`${API}/ethbridge/burn`, req);
     const { msg, fee, memo } = data.value;
-    return await client.signAndPost(msg, fee, memo);
+    let a = await client.signAndPost(msg, fee, memo);
+    console.log(a);
   } catch (error) {
     console.log('Transfer ETH from Cosmos to Ethereum fail! ', error);
   }
@@ -256,32 +257,32 @@ exports.transferLocalAssetFromCosmosToEthereum = async function (
 // );
 
 // this.transferETHFromCosmosToEthereum(
-//   'shrug give segment transfer hotel hurry acquire stomach oil warfare reason mirror cute try buyer female provide myth own dash hungry card glare use',
+//   'village blue fox clinic canoe health common surge divorce cluster firm carpet manage keep captain sword issue door hurdle wait leg bridge just snow',
 //   ETHEREUM_RECEIVER,
-//   '500'
+//   '1000'
 // );
 
 // this.newAccount();
 
 // this.transferCoinToAnother(
-//   'shrug give segment transfer hotel hurry acquire stomach oil warfare reason mirror cute try buyer female provide myth own dash hungry card glare use',
-//   'cosmos13k29zha6u78hl2t6ta9sx2nkagqv8rveahp7kx',
-//   '500',
-//   'peggyeth'
+//   'load mammal ancient addict health sugar source tired flame emotion clever cupboard copper guard opera cradle fragile grace penalty address gorilla flight blush luxury',
+//   'cosmos1t7sej8t0530sr304lsfruh4vdunl5herazfqtr',
+//   '1000',
+//   'stake'
 // );
 
 // this.transferERC20FromCosmosToEthereum(
-//   'shrug give segment transfer hotel hurry acquire stomach oil warfare reason mirror cute try buyer female provide myth own dash hungry card glare use',
+//   'village blue fox clinic canoe health common surge divorce cluster firm carpet manage keep captain sword issue door hurdle wait leg bridge just snow',
 //   ETHEREUM_RECEIVER,
-//   '1000',
+//   '1400',
 //   DAI_TOKEN_CONTRACT_ADDRESS,
 //   'dai'
 // );
 
-// this.transferLocalAssetFromCosmosToEthereum(
-//   'canoe bridge wash industry blue trumpet lion skull champion jazz key cliff such arctic tunnel ankle intact zero initial patch domain depth cloth promote',
-//   ETHEREUM_RECEIVER,
-//   '1',
-//   DAI_TOKEN_CONTRACT_ADDRESS,
-//   'stake'
-// );
+this.transferLocalAssetFromCosmosToEthereum(
+  'village blue fox clinic canoe health common surge divorce cluster firm carpet manage keep captain sword issue door hurdle wait leg bridge just snow',
+  ETHEREUM_RECEIVER,
+  '700',
+  DAI_TOKEN_CONTRACT_ADDRESS,
+  'stake'
+);

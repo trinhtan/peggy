@@ -145,11 +145,12 @@ func BurnLockEventToCosmosMsg(claimType types.Event, attributes []tmKv.Pair) typ
 			ethereumReceiver = common.HexToAddress(val)
 		case types.Symbol.String():
 			if claimType == types.MsgBurn {
-				if !strings.Contains(val, defaultPrefix) {
-					log.Fatal("Can only relay burns of 'peggy' prefixed coins")
-				}
-				res := strings.SplitAfter(val, defaultPrefix)
-				symbol = strings.ToUpper(strings.Join(res[1:], ""))
+				// if !strings.Contains(val, defaultPrefix) {
+				// 	log.Fatal("Can only relay burns of 'peggy' prefixed coins")
+				// }
+				// res := strings.SplitAfter(val, defaultPrefix)
+				// symbol = strings.ToUpper(strings.Join(res[1:], ""))
+				symbol = strings.ToUpper(val)
 			} else {
 				symbol = strings.ToUpper(val)
 			}

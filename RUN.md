@@ -37,7 +37,7 @@ ebcli keys add validator --output json > validator.json
 ebcli keys add testuser --output json > testuser.json
 
 # Initialize the genesis account and transaction
-ebd add-genesis-account $(ebcli keys show validator -a) 1000000000stake,1000000000atom
+ebd add-genesis-account $(ebcli keys show validator -a) 1000000000000000000000000000stake,1000000000atom
 
 # Create genesis transaction
 ebd gentx --name validator --keyring-backend test

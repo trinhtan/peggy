@@ -19,7 +19,7 @@ module.exports = async () => {
    ******************************************/
   // Lock transaction default params
   const DEFAULT_COSMOS_RECIPIENT = Web3.utils.utf8ToHex(
-    'cosmos1qxam4g7dvrrdw3p3y2mj5x04jstacqklpx0zh6'
+    'cosmos1t7sej8t0530sr304lsfruh4vdunl5herazfqtr'
   );
   const DEFAULT_ETH_DENOM = 'eth';
   const DEFAULT_AMOUNT = '1000';
@@ -85,7 +85,7 @@ module.exports = async () => {
   let provider;
   if (NETWORK_ROPSTEN) {
     provider = new HDWalletProvider(
-      process.env.MNEMONIC,
+      process.env.PRIVATE_KEY,
       'https://ropsten.infura.io/v3/'.concat(process.env.INFURA_PROJECT_ID)
     );
   } else {
@@ -106,7 +106,7 @@ module.exports = async () => {
     const { logs } = await contract.deployed().then(function (instance) {
       console.log('Connected to contract, sending lock...');
       return instance.lock(cosmosRecipient, coinDenom, amount, {
-        from: '0x8f287eA4DAD62A3A626942d149509D6457c2516C',
+        from: '0x02610D24fd42f1237c584b6A699727aBAE7cC04e',
         value: coinDenom === NULL_ADDRESS ? amount : 0,
         gas: 300000 // 300,000 Gwei
       });
