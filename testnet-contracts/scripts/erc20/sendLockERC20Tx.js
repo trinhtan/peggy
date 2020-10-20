@@ -1,57 +1,66 @@
-/** @format */
-
 module.exports = async () => {
   try {
     const Web3 = require('web3');
     const HDWalletProvider = require('@truffle/hdwallet-provider');
+    const { CONSTANTS } = require('../constants');
 
-    // Contract abstraction
     const truffleContract = require('truffle-contract');
-    const contract = truffleContract(require('../build/contracts/BridgeBank.json'));
+    const contract = truffleContract(require('../../build/contracts/BridgeBank.json'));
+    const erc20Json = require('./erc20.json');
 
-    const NULL_ADDRESS = '0x0000000000000000000000000000000000000000';
     const COSMOS_RECIPIENT = Web3.utils.utf8ToHex(process.argv[4]);
     const AMOUNT = process.argv[5];
-    const ETH_DENOM = process.argv[6];
-    console.log(COSMOS_RECIPIENT, ETH_DENOM, AMOUNT);
+    const DENOM = process.argv[6];
 
     let provider;
-    if (process.argv[8] === 'ropsten') {
+    if (process.argv[8] == 'ropsten') {
       provider = new HDWalletProvider(
         process.env.USER_PRIVATE_KEY,
         'https://ropsten.infura.io/v3/'.concat(process.env.INFURA_PROJECT_ID)
       );
-    } else if (process.argv[8] === 'rinkeby') {
+    } else if (process.argv[8] == 'rinkeby') {
       provider = new HDWalletProvider(
         process.env.USER_PRIVATE_KEY,
         'https://rinkeby.infura.io/v3/'.concat(process.env.INFURA_PROJECT_ID)
       );
-    } else if (process.argv[8] === 'mainnet') {
+    } else if (process.argv[8] == 'mainnet') {
       provider = new HDWalletProvider(
         process.env.USER_PRIVATE_KEY,
-        'https://mainnet.infura.io/v3/'.concat(process.env.INFURA_PROJECT_ID)
+        'https://rinkeby.infura.io/v3/'.concat(process.env.INFURA_PROJECT_ID)
       );
     } else {
       throw new Error('Invalid Network ID!');
     }
-
     const USER_ADDRESS = process.env.USER_ADDRESS;
 
-    if (ETH_DENOM !== 'eth') {
-      throw new Error('Invalid ETH denom!');
+    const TOKEN_ADDRESS = CONSTANTS[process.argv[8]].tokens[DENOM].address;
+    if (!TOKEN_ADDRESS) {
+      throw new Error('Invalid Token!');
     }
 
     const web3 = new Web3(provider);
     contract.setProvider(web3.currentProvider);
 
+    const erc20Contract = new web3.eth.Contract(erc20Json, TOKEN_ADDRESS);
+
+    const bridgeBankInstance = await contract.deployed().then(function (instance) {
+      return instance;
+    });
+
+    const bridgeBankAddress = bridgeBankInstance.address;
+
+    // sender approve Bridge Bank
+    console.log('Aprove for Bridge Bank');
+    await erc20Contract.methods.approve(bridgeBankAddress, AMOUNT).send({
+      from: USER_ADDRESS,
+      value: 0,
+      gas: 300000, // 300,000 Gwei
+    });
+
     // Send lock transaction
     console.log('Connecting to contract....');
-    const { logs } = await contract.deployed().then(function (instance) {
-      console.log('Connected to contract, sending lock...');
-      return instance.lock(COSMOS_RECIPIENT, NULL_ADDRESS, AMOUNT, {
-        from: USER_ADDRESS,
-        value: AMOUNT,
-      });
+    const { logs } = await bridgeBankInstance.lock(COSMOS_RECIPIENT, TOKEN_ADDRESS, AMOUNT, {
+      from: USER_ADDRESS,
     });
 
     console.log('Sent lock...');
@@ -59,6 +68,7 @@ module.exports = async () => {
     // Get event logs
     const event = logs.find((e) => e.event === 'LogLock');
     console.log(event);
+
     // Parse event fields
     const lockEvent = {
       to: event.args._to,

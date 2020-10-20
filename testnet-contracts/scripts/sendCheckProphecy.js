@@ -37,7 +37,7 @@ module.exports = async () => {
   let provider;
   if (NETWORK_ROPSTEN) {
     provider = new HDWalletProvider(
-      process.env.MNEMONIC,
+      process.env.PRIVATE_KEY,
       "https://ropsten.infura.io/v3/".concat(process.env.INFURA_PROJECT_ID)
     );
   } else {
@@ -57,8 +57,8 @@ module.exports = async () => {
 
   console.log("Attempting to send checkBridgeProphecy() tx...");
 
-  const instance = await oracleContract.deployed()
-  let result
+  const instance = await oracleContract.deployed();
+  let result;
   try {
     result = await instance.checkBridgeProphecy(prophecyID, {
       from: accounts[0],
@@ -66,8 +66,8 @@ module.exports = async () => {
       gas: 300000 // 300,000 Gwei
     });
   } catch (error) {
-    console.log(error.message)
-    return
+    console.log(error.message);
+    return;
   }
 
   const valid = result[0];

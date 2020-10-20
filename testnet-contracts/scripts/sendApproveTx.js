@@ -9,22 +9,16 @@ module.exports = async () => {
 
   // Contract abstraction
   const truffleContract = require('truffle-contract');
-  const bridgeContract = truffleContract(
-    require('../build/contracts/BridgeBank.json')
-  );
-  const tokenContract = truffleContract(
-    require('../build/contracts/BridgeToken.json')
-  );
+  const bridgeContract = truffleContract(require('../build/contracts/BridgeBank.json'));
+  const tokenContract = truffleContract(require('../build/contracts/BridgeToken.json'));
 
   /*******************************************
    *** Constants
    ******************************************/
   // Config values
-  const NETWORK_ROPSTEN =
-    process.argv[4] === '--network' && process.argv[5] === 'ropsten';
+  const NETWORK_ROPSTEN = process.argv[4] === '--network' && process.argv[5] === 'ropsten';
   const DEFAULT_PARAMS =
-    process.argv[4] === '--default' ||
-    (NETWORK_ROPSTEN && process.argv[6] === '--default');
+    process.argv[4] === '--default' || (NETWORK_ROPSTEN && process.argv[6] === '--default');
   const NUM_ARGS = process.argv.length - 4;
 
   // Default transaction parameters
@@ -38,9 +32,7 @@ module.exports = async () => {
    ******************************************/
   if (NETWORK_ROPSTEN) {
     if (NUM_ARGS !== 3 && NUM_ARGS !== 4) {
-      return console.error(
-        'Error: Must specify token amount if using the Ropsten network.'
-      );
+      return console.error('Error: Must specify token amount if using the Ropsten network.');
     }
   } else {
     if (NUM_ARGS !== 1) {
@@ -85,7 +77,7 @@ module.exports = async () => {
   let provider;
   if (NETWORK_ROPSTEN) {
     provider = new HDWalletProvider(
-      process.env.MNEMONIC,
+      process.env.PRIVATE_KEY,
       'https://ropsten.infura.io/v3/'.concat(process.env.INFURA_PROJECT_ID)
     );
   } else {
@@ -103,11 +95,9 @@ module.exports = async () => {
     // Get current accounts
     const accounts = await web3.eth.getAccounts();
 
-    const bridgeContractAddress = await bridgeContract
-      .deployed()
-      .then(function (instance) {
-        return instance.address;
-      });
+    const bridgeContractAddress = await bridgeContract.deployed().then(function (instance) {
+      return instance.address;
+    });
 
     let instance;
     if (tokenAddress) {
@@ -117,15 +107,11 @@ module.exports = async () => {
     }
 
     // Send lock transaction
-    const { logs } = await instance.approve(
-      bridgeContractAddress,
-      tokenAmount,
-      {
-        from: accounts[0],
-        value: 0,
-        gas: 300000, // 300,000 Gwei
-      }
-    );
+    const { logs } = await instance.approve(bridgeContractAddress, tokenAmount, {
+      from: accounts[0],
+      value: 0,
+      gas: 300000, // 300,000 Gwei
+    });
 
     // Get event logs
     const event = logs.find((e) => e.event === 'Approval');

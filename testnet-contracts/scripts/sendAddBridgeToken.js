@@ -15,7 +15,7 @@ module.exports = async () => {
    ******************************************/
   // Config values
   let symbol;
-  let NETWORK_ROPSTEN
+  let NETWORK_ROPSTEN;
   try {
     NETWORK_ROPSTEN =
       process.argv[4] === "--network" && process.argv[5] === "ropsten";
@@ -28,9 +28,9 @@ module.exports = async () => {
     } else {
       symbol = process.argv[4].toString();
     }
-  }catch (error) {
-    console.log({error})
-    return
+  } catch (error) {
+    console.log({ error });
+    return;
   }
   /*******************************************
    *** Web3 provider
@@ -39,7 +39,7 @@ module.exports = async () => {
   let provider;
   if (NETWORK_ROPSTEN) {
     provider = new HDWalletProvider(
-      process.env.MNEMONIC,
+      process.env.PRIVATE_KEY,
       "https://ropsten.infura.io/v3/".concat(process.env.INFURA_PROJECT_ID)
     );
   } else {
@@ -59,18 +59,18 @@ module.exports = async () => {
     console.log("Attempting to send createNewBridgeToken() tx with symbol: '" + symbol + "'...");
 
     // Get the bridge token's address if it were to be created
-    const bridgeTokenAddress = await contract.deployed().then(function(instance) {
+    const bridgeTokenAddress = await contract.deployed().then(function (instance) {
       return instance.createNewBridgeToken.call(symbol, {
         from: accounts[0],
         value: 0,
         gas: 3000000 // 300,000 Gwei
       });
     });
-    console.log(`from ${accounts[0]}`)
-    console.log('Should deploy to ' + bridgeTokenAddress)
+    console.log(`from ${accounts[0]}`);
+    console.log('Should deploy to ' + bridgeTokenAddress);
 
     //  Create the bridge token
-    await contract.deployed().then(function(instance) {
+    await contract.deployed().then(function (instance) {
       return instance.createNewBridgeToken(symbol, {
         from: accounts[0],
         value: 0,
@@ -78,9 +78,9 @@ module.exports = async () => {
       });
     });
 
-    console.log("")
+    console.log("");
     // Check bridge token whitelist
-    const isOnWhiteList = await contract.deployed().then(function(instance) {
+    const isOnWhiteList = await contract.deployed().then(function (instance) {
       return instance.bridgeTokenWhitelist(bridgeTokenAddress, {
         from: accounts[0],
         value: 0,
@@ -98,7 +98,7 @@ module.exports = async () => {
       );
     }
   } catch (error) {
-    console.error({error})
+    console.error({ error });
   }
 
   return;

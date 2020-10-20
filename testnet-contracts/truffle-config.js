@@ -15,34 +15,44 @@ module.exports = {
         version: '0.5.0',
         optimizer: {
           enabled: true,
-          runs: 200
-        }
-      }
+          runs: 200,
+        },
+      },
     },
     ropsten: {
       networkCheckTimeout: 100000,
       provider: function () {
         return new HDWalletProvider(
-          process.env.MNEMONIC,
+          process.env.OPERATOR_PRIVATE_KEY,
           'https://ropsten.infura.io/v3/'.concat(process.env.INFURA_PROJECT_ID)
         );
       },
       network_id: 3,
-      gas: 6721975
+      gas: 6721975,
+    },
+    rinkeby: {
+      provider: function () {
+        return new HDWalletProvider(
+          process.env.OPERATOR_PRIVATE_KEY,
+          'https://rinkeby.infura.io/v3/'.concat(process.env.INFURA_PROJECT_ID)
+        );
+      },
+      gas: 6721975,
+      network_id: 4,
     },
     xdai: {
       provider: function () {
         return new HDWalletProvider(process.env.MNEMONIC, 'https://dai.poa.network');
       },
       network_id: 100,
-      gas: 6000000
-    }
+      gas: 6000000,
+    },
   },
   rpc: {
     host: 'localhost',
-    post: 8080
+    post: 8080,
   },
   mocha: {
-    useColors: true
-  }
+    useColors: true,
+  },
 };

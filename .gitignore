@@ -4,11 +4,12 @@
 *.swo
 .vscode
 .idea
+go.sum
 
 # Build
 vendor
 .vendor-new
-node_modules/ 
+node_modules/
 build
 node_modules
 
