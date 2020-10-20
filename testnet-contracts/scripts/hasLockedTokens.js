@@ -25,7 +25,7 @@ module.exports = async () => {
     let provider;
     if (NETWORK_ROPSTEN) {
         provider = new HDWalletProvider(
-            process.env.MNEMONIC,
+            process.env.PRIVATE_KEY,
             "https://ropsten.infura.io/v3/".concat(process.env.INFURA_PROJECT_ID)
         );
     } else {
@@ -36,17 +36,17 @@ module.exports = async () => {
     contract.setProvider(web3.currentProvider);
     try {
         // TODO: move to arguments
-        const tokenSymbol = "TEST"
+        const tokenSymbol = "TEST";
 
         /*******************************************
          *** Contract interaction
          ******************************************/
         await contract.deployed().then(async function (instance) {
-            const tokenAddress = await instance.hasLockedFunds(tokenSymbol, 1)
-            console.log("Symbol:", tokenAddress)
-            console.log("Token address:", tokenSymbol)
-        })
+            const tokenAddress = await instance.hasLockedFunds(tokenSymbol, 1);
+            console.log("Symbol:", tokenAddress);
+            console.log("Token address:", tokenSymbol);
+        });
     } catch (error) {
-        console.error({ error })
+        console.error({ error });
     }
 };

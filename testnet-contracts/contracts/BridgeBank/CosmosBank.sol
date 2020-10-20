@@ -13,8 +13,8 @@ contract CosmosBank {
     using SafeMath for uint256;
 
     uint256 public bridgeTokenCount;
-    mapping(string => address) controlledBridgeTokens;
-    mapping(bytes32 => CosmosDeposit) cosmosDeposits;
+    mapping(string => address) public controlledBridgeTokens;
+    mapping(bytes32 => CosmosDeposit) public cosmosDeposits;
 
     struct CosmosDeposit {
         bytes cosmosSender;
@@ -134,7 +134,7 @@ contract CosmosBank {
         require(
             BridgeToken(_bridgeTokenAddress).mint(
                 _intendedRecipient,
-                _amount * 10**18
+                _amount
             ),
             "Attempted mint of bridge tokens failed"
         );
@@ -143,13 +143,13 @@ contract CosmosBank {
             _cosmosSender,
             _intendedRecipient,
             _bridgeTokenAddress,
-            _amount * 10**18
+            _amount
         );
 
         emit LogBridgeTokenMint(
             _bridgeTokenAddress,
             _symbol,
-            _amount * 10**18,
+            _amount,
             _intendedRecipient
         );
     }

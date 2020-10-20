@@ -49,7 +49,7 @@ install:
 # 	@find . -name '*.go' -type f -not -path "./vendor*" -not -path "*.git*" | xargs gofmt -d -s
 # 	go mod verify
 
-test:
-	go test ./...
+# test:
+# 	go test ./...
 
 .PHONY: all build go-mod-cache build_test_container start_test_containers stop_test_containers clean install test lint all

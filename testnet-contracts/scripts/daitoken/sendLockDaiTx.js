@@ -17,9 +17,9 @@ module.exports = async () => {
    ******************************************/
   // Lock transaction default params
   const DEFAULT_COSMOS_RECIPIENT = Web3.utils.utf8ToHex(
-    'cosmos1qxam4g7dvrrdw3p3y2mj5x04jstacqklpx0zh6'
+    'cosmos1tgv6hq8e0dg4l9djc2qrq3ruhnfw6r8h8t5quz'
   );
-  const DEFAULT_DAI_DENOM = 'dai';
+  const DEFAULT_DAI_DENOM = 'DAI';
   const DEFAULT_AMOUNT = '1000';
 
   // Config values
@@ -72,7 +72,7 @@ module.exports = async () => {
   }
 
   // Convert default 'dai' coin denom into dai address
-  if (coinDenom == 'dai') {
+  if (coinDenom == 'DAI') {
     coinDenom = DAI_ADDRESS;
   }
 
@@ -83,13 +83,12 @@ module.exports = async () => {
   let provider;
   if (NETWORK_ROPSTEN) {
     provider = new HDWalletProvider(
-      process.env.MNEMONIC,
+      process.env.PRIVATE_KEY,
       'https://ropsten.infura.io/v3/'.concat(process.env.INFURA_PROJECT_ID)
     );
   } else {
     provider = new Web3.providers.HttpProvider(process.env.LOCAL_PROVIDER);
   }
-  console.log(process.env.INFURA_PROJECT_ID);
 
   const web3 = new Web3(provider);
   contract.setProvider(web3.currentProvider);
@@ -105,7 +104,7 @@ module.exports = async () => {
     // sender approve Bridge Bank use DAI
     console.log('Aprove for Bridge Bank');
     await daiContract.methods.approve(contract.networks['3'].address, amount).send({
-      from: '0x8f287eA4DAD62A3A626942d149509D6457c2516C',
+      from: '0x02610D24fd42f1237c584b6A699727aBAE7cC04e',
       value: 0,
       gas: 300000 // 300,000 Gwei
     });
@@ -115,7 +114,7 @@ module.exports = async () => {
     const { logs } = await contract.deployed().then(function (instance) {
       console.log('Connected to contract, sending lock...');
       return instance.lock(cosmosRecipient, coinDenom, amount, {
-        from: '0x8f287eA4DAD62A3A626942d149509D6457c2516C',
+        from: '0x02610D24fd42f1237c584b6A699727aBAE7cC04e',
         value: 0,
         gas: 300000 // 300,000 Gwei
       });

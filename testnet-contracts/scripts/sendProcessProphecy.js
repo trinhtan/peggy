@@ -37,7 +37,7 @@ module.exports = async () => {
   let provider;
   if (NETWORK_ROPSTEN) {
     provider = new HDWalletProvider(
-      process.env.MNEMONIC,
+      process.env.PRIVATE_KEY,
       "https://ropsten.infura.io/v3/".concat(process.env.INFURA_PROJECT_ID)
     );
   } else {
@@ -57,7 +57,7 @@ module.exports = async () => {
 
   console.log("Attempting to send processBridgeProphecy() tx...");
   try {
-    var { logs } = await oracleContract.deployed().then(function(instance) {
+    var { logs } = await oracleContract.deployed().then(function (instance) {
       return instance.processBridgeProphecy(prophecyID, {
         from: accounts[0],
         value: 0,
@@ -65,8 +65,8 @@ module.exports = async () => {
       });
     });
   } catch (error) {
-    console.log(error.message)
-    return
+    console.log(error.message);
+    return;
   }
 
   // Get event logs

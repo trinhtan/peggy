@@ -17,7 +17,7 @@ const ETH_SYMBOL = 'eth';
 const ETHEREUM_CHAIN_ID = '3';
 
 const ETHEREUM_SENDER = '0x8f287eA4DAD62A3A626942d149509D6457c2516C';
-const ETHEREUM_RECEIVER = '0xf68F0c27D90bDcde125724D390fF75b3635FF0Ab';
+const ETHEREUM_RECEIVER = '0x02610D24fd42f1237c584b6A699727aBAE7cC04e';
 
 const validator = require('../validator.json');
 const testuser = require('../testuser.json');
@@ -86,13 +86,14 @@ exports.transferETHFromCosmosToEthereum = async function (mnemonic, ethereumRece
       cosmos_sender: address,
       ethereum_receiver: ethereumReceiver,
       amount: amount,
-      symbol: PEGGY_PREFIX + ETH_SYMBOL
+      symbol: ETH_SYMBOL
     };
 
     const req = { base_req, ...body };
     const { data } = await axios.post(`${API}/ethbridge/burn`, req);
     const { msg, fee, memo } = data.value;
-    return await client.signAndPost(msg, fee, memo);
+    let tx = await client.signAndPost(msg, fee, memo);
+    console.log(tx);
   } catch (error) {
     console.log('Transfer ETH from Cosmos to Ethereum fail! ', error);
   }
@@ -195,13 +196,14 @@ exports.transferERC20FromCosmosToEthereum = async function (
       cosmos_sender: address,
       ethereum_receiver: ethereumReceiver,
       amount: amount,
-      symbol: PEGGY_PREFIX + symbol
+      symbol: symbol
     };
 
     const req = { base_req, ...body };
     const { data } = await axios.post(`${API}/ethbridge/burn`, req);
     const { msg, fee, memo } = data.value;
-    return await client.signAndPost(msg, fee, memo);
+    let a = await client.signAndPost(msg, fee, memo);
+    console.log(a);
   } catch (error) {
     console.log('Transfer ETH from Cosmos to Ethereum fail! ', error);
   }
@@ -238,9 +240,10 @@ exports.transferLocalAssetFromCosmosToEthereum = async function (
     };
 
     const req = { base_req, ...body };
-    const { data } = await axios.post(`${API}/ethbridge/lock`, req);
+    const { data } = await axios.post(`${API}/ethbridge/burn`, req);
     const { msg, fee, memo } = data.value;
-    return await client.signAndPost(msg, fee, memo);
+    let tx = await client.signAndPost(msg, fee, memo);
+    console.log(tx);
   } catch (error) {
     console.log('Transfer ETH from Cosmos to Ethereum fail! ', error);
   }
@@ -256,7 +259,7 @@ exports.transferLocalAssetFromCosmosToEthereum = async function (
 // );
 
 // this.transferETHFromCosmosToEthereum(
-//   'shrug give segment transfer hotel hurry acquire stomach oil warfare reason mirror cute try buyer female provide myth own dash hungry card glare use',
+//   'inherit control solar genius diet grape cake absurd can donor solve half today swim poverty door code differ clump hour neither prize foster police',
 //   ETHEREUM_RECEIVER,
 //   '500'
 // );
@@ -264,14 +267,14 @@ exports.transferLocalAssetFromCosmosToEthereum = async function (
 // this.newAccount();
 
 // this.transferCoinToAnother(
-//   'shrug give segment transfer hotel hurry acquire stomach oil warfare reason mirror cute try buyer female provide myth own dash hungry card glare use',
-//   'cosmos13k29zha6u78hl2t6ta9sx2nkagqv8rveahp7kx',
-//   '500',
-//   'peggyeth'
+//   'load mammal ancient addict health sugar source tired flame emotion clever cupboard copper guard opera cradle fragile grace penalty address gorilla flight blush luxury',
+//   'cosmos1t7sej8t0530sr304lsfruh4vdunl5herazfqtr',
+//   '1000',
+//   'stake'
 // );
 
 // this.transferERC20FromCosmosToEthereum(
-//   'shrug give segment transfer hotel hurry acquire stomach oil warfare reason mirror cute try buyer female provide myth own dash hungry card glare use',
+//   'inherit control solar genius diet grape cake absurd can donor solve half today swim poverty door code differ clump hour neither prize foster police',
 //   ETHEREUM_RECEIVER,
 //   '1000',
 //   DAI_TOKEN_CONTRACT_ADDRESS,
@@ -279,9 +282,9 @@ exports.transferLocalAssetFromCosmosToEthereum = async function (
 // );
 
 // this.transferLocalAssetFromCosmosToEthereum(
-//   'canoe bridge wash industry blue trumpet lion skull champion jazz key cliff such arctic tunnel ankle intact zero initial patch domain depth cloth promote',
+//   'inherit control solar genius diet grape cake absurd can donor solve half today swim poverty door code differ clump hour neither prize foster police',
 //   ETHEREUM_RECEIVER,
-//   '1',
+//   '1000000000000000000',
 //   DAI_TOKEN_CONTRACT_ADDRESS,
 //   'stake'
 // );
