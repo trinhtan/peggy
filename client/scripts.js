@@ -225,7 +225,8 @@ exports.transferLocalAssetFromCosmosToEthereum = async function (
     );
 
     let [{ address }] = await wallet.getAccounts();
-
+    let account = await wallet.getAccounts();
+    console.log('address', account);
     let client = new launchpad.SigningCosmosClient(API, address, wallet);
     let base_req = { chain_id: PEGGY_CHAIN_ID, from: address };
 
@@ -281,10 +282,10 @@ exports.transferLocalAssetFromCosmosToEthereum = async function (
 //   'dai'
 // );
 
-// this.transferLocalAssetFromCosmosToEthereum(
-//   'inherit control solar genius diet grape cake absurd can donor solve half today swim poverty door code differ clump hour neither prize foster police',
-//   ETHEREUM_RECEIVER,
-//   '1000000000000000000',
-//   DAI_TOKEN_CONTRACT_ADDRESS,
-//   'stake'
-// );
+this.transferLocalAssetFromCosmosToEthereum(
+  'gate brief price material permit wedding announce little scare utility urban hen buzz diagram rocket tomato mammal speak infant round month bike pulp thunder',
+  ETHEREUM_RECEIVER,
+  '1000000000000000000',
+  DAI_TOKEN_CONTRACT_ADDRESS,
+  'stake'
+);
