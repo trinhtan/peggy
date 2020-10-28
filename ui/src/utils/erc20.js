@@ -20,6 +20,9 @@ const Web3 = require('web3');
 export const balanceOf = async (tokenAddress, walletAddress) => {
   const web3 = new Web3(window.ethereum);
   let balance;
+  if (!walletAddress) {
+    return 0;
+  }
   if (tokenAddress === '0x0000000000000000000000000000000000000001') {
     balance = web3.eth.getBalance(walletAddress);
   } else {

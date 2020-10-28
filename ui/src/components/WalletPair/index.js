@@ -5,7 +5,7 @@ import MetaMaskWallet from 'components/MetaMaskWallet';
 import LogoutButton from 'components/LogoutButton';
 import Token from 'constants/Token';
 import { Modal, Button, Input } from 'antd';
-import mathWallet from 'icons/mathWallet.png';
+import mathWallet from 'icons/cosmos.png';
 import { setReceiver, setMnemonicAction } from 'store/actions';
 import * as launchpad from '@cosmjs/launchpad';
 import './index.css';
@@ -83,7 +83,7 @@ function WalletPair() {
   return (
     <div className='wallet-pair'>
       <Modal title='Insert Mnemonic' visible={visible} onOk={handleOk} onCancel={handleCancel}>
-        <p>Some contents...</p>
+        <p>Fill your mnemonic:</p>
         <Input placeholder='Basic usage' onChange={insertMnemonic} />
       </Modal>
       <Row gutter={[8, 8]}>

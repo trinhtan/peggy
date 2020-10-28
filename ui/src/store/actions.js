@@ -54,14 +54,22 @@ export const setSenderBalance = balance => async dispatch => {
   dispatch({ type: SET_SENDER_BALANCE, balance: newBalance });
 };
 
+export const getSenderBal = tokenAddress => async (dispatch, getState) => {
+  const state = getState();
+  const senderAddress = state.senderAddress;
+  let newBal = await balanceOf(tokenAddress, senderAddress);
+  dispatch(setSenderBalance(newBal));
+};
+
 export const SET_RECEIVER_BALANCE = 'SET_RECEIVER_BALANCE';
 export const setReceiverBalance = balance => async dispatch => {
-  dispatch({ type: SET_RECEIVER_BALANCE, balance });
+  let newBal = parseFloat(balance).toFixed(2);
+  dispatch({ type: SET_RECEIVER_BALANCE, balance: newBal });
 };
 
 export const SET_SEND_AMOUNT = 'SET_SEND_AMOUNT';
 export const SET_RECEIVE_AMOUNT = 'SET_RECEIVE_AMOUNT';
-export const setSendAmount = sendAmount => async (dispatch, getState) => {
+export const setSendAmount = sendAmount => async dispatch => {
   dispatch({ type: SET_RECEIVE_AMOUNT, receiveAmount: parseFloat(sendAmount).toFixed(3) });
   dispatch({ type: SET_SEND_AMOUNT, sendAmount: parseFloat(sendAmount).toFixed(3) });
 };

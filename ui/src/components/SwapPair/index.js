@@ -14,6 +14,7 @@ function SwapPair() {
   const receiveAmount = useSelector(state => state.receiveAmount);
   const sendAmount = useSelector(state => state.sendAmount);
   const direction = useSelector(state => state.direction);
+  const receiverBalance = useSelector(state => state.receiverBalance);
 
   const [tokenSelected, setTokenSelected] = useState('LINK');
 
@@ -65,6 +66,7 @@ function SwapPair() {
                   value={sendAmount}
                   disabled={!direction}
                   className='input-border-round'
+                  max={9}
                 ></InputNumber>
                 <div>
                   <span>Max: {senderBalance}</span>
@@ -112,7 +114,11 @@ function SwapPair() {
                   disabled={direction}
                   bordered={true}
                   value={receiveAmount}
+                  max={9}
                 ></InputNumber>
+                <div>
+                  <span>Max: {receiverBalance}</span>
+                </div>
               </Col>
             </Row>
           </Col>

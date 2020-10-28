@@ -2,11 +2,18 @@ import React, { useState } from 'react';
 // import { Button, Input, Col, Row, Divider } from 'antd';
 import { Button, Modal } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
-import { setSender, setReceiver, setSendAmount } from '../../store/actions';
+import {
+  setSender,
+  setReceiver,
+  setSendAmount,
+  setReceiverBalance,
+  getSenderBal
+} from '../../store/actions';
 import Token from 'constants/Token.js';
 import './index.css';
 import { sendEth, sendErc20, approve } from 'utils/sendFromEth';
-import { transferEthFromPeggy, transferErc20FromPeggy } from 'utils/sendFromPeggy';
+import { transferEthFromPeggy, transferErc20FromPeggy, getBalancePeggy } from 'utils/sendFromPeggy';
+import useInterval from 'utils/useInterval';
 
 function ReceiverSwap() {
   const dispatch = useDispatch();
@@ -28,6 +35,12 @@ function ReceiverSwap() {
   const [visibleERC, setVisibleERC] = useState(false);
   const [visibleETH, setVisibleETH] = useState(false);
   const [loadingTransfer, setLoadingTransfer] = useState(false);
+
+  useInterval(async () => {
+    const cosmosBal = await getBalancePeggy(receiverAddress, token.name.toLowerCase());
+    dispatch(setReceiverBalance(cosmosBal / 1e18));
+    dispatch(getSenderBal(token.address));
+  }, 5000);
 
   const setVisible = async () => {
     if (senderToken !== '0x0000000000000000000000000000000000000001') {

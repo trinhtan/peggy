@@ -76,3 +76,15 @@ exports.transferErc20FromPeggy = async function (
     console.log('Transfer ETH from Cosmos to Ethereum fail! ', error);
   }
 };
+
+exports.getBalancePeggy = async (cosmosAddress, symbol) => {
+  if (!cosmosAddress) return 0;
+  try {
+    const { data } = await axios.get(`${API}/bank/balances/${cosmosAddress}`);
+    const res = data.result.find(e => e.denom === symbol);
+    console.log(res.amount);
+    return res.amount;
+  } catch (e) {
+    return 0;
+  }
+};
