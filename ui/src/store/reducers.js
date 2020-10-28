@@ -12,6 +12,7 @@ const initialState = {
   receiverBalance: 0,
   receiverType: '',
   receiveAmount: 0,
+  mnemonic: '',
 
   direction: true
 };
@@ -69,6 +70,11 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         direction: action.direction
+      };
+    case actions.SET_MNEMONIC:
+      return {
+        ...state,
+        mnemonic: action.mnemonic
       };
 
     default:

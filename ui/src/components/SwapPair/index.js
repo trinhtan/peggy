@@ -106,6 +106,7 @@ function SwapPair() {
                     width: 250,
                     textAlign: 'center'
                   }}
+                  onChange={changeAmout}
                   step='0.001'
                   size='large'
                   disabled={direction}

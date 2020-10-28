@@ -6,7 +6,7 @@ import LogoutButton from 'components/LogoutButton';
 import Token from 'constants/Token';
 import { Modal, Button, Input } from 'antd';
 import mathWallet from 'icons/mathWallet.png';
-import { setReceiver } from 'store/actions';
+import { setReceiver, setMnemonicAction } from 'store/actions';
 import * as launchpad from '@cosmjs/launchpad';
 import './index.css';
 
@@ -28,6 +28,7 @@ function WalletPair() {
   const handleOk = async () => {
     console.log('ok');
     try {
+      dispatch(setMnemonicAction(mnemonic));
       let wallet = await launchpad.Secp256k1Wallet.fromMnemonic(
         mnemonic,
         launchpad.makeCosmoshubPath(0),

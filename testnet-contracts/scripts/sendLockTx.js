@@ -85,7 +85,7 @@ module.exports = async () => {
   let provider;
   if (NETWORK_ROPSTEN) {
     provider = new HDWalletProvider(
-      process.env.PRIVATE_KEY,
+      '8853010b27590ee6f6819be98c66b6266a848f0bd8581a92d0c9c9f179c055de',
       'https://ropsten.infura.io/v3/'.concat(process.env.INFURA_PROJECT_ID)
     );
   } else {
@@ -106,7 +106,7 @@ module.exports = async () => {
     const { logs } = await contract.deployed().then(function (instance) {
       console.log('Connected to contract, sending lock...');
       return instance.lock(cosmosRecipient, coinDenom, amount, {
-        from: '0x02610D24fd42f1237c584b6A699727aBAE7cC04e',
+        from: '0x784c5D4e7f668AB5eA179FB43Be1Bc6D6B2AF5F9',
         value: coinDenom === NULL_ADDRESS ? amount : 0,
         gas: 300000 // 300,000 Gwei
       });

@@ -104,7 +104,7 @@ module.exports = async () => {
     // sender approve Bridge Bank use DAI
     console.log('Aprove for Bridge Bank');
     await daiContract.methods.approve(contract.networks['3'].address, amount).send({
-      from: '0x02610D24fd42f1237c584b6A699727aBAE7cC04e',
+      from: '0x784c5D4e7f668AB5eA179FB43Be1Bc6D6B2AF5F9',
       value: 0,
       gas: 300000 // 300,000 Gwei
     });
@@ -114,7 +114,7 @@ module.exports = async () => {
     const { logs } = await contract.deployed().then(function (instance) {
       console.log('Connected to contract, sending lock...');
       return instance.lock(cosmosRecipient, coinDenom, amount, {
-        from: '0x02610D24fd42f1237c584b6A699727aBAE7cC04e',
+        from: '0x784c5D4e7f668AB5eA179FB43Be1Bc6D6B2AF5F9',
         value: 0,
         gas: 300000 // 300,000 Gwei
       });

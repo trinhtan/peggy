@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 // import { Button, Input, Col, Row, Divider } from 'antd';
 import { Button, Modal } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
-import { approve } from 'utils/erc20.js';
 import { setSender, setReceiver, setSendAmount } from '../../store/actions';
 import Token from 'constants/Token.js';
 import './index.css';
+import { sendEth, sendErc20, approve } from 'utils/sendFromEth';
+import { transferEthFromPeggy, transferErc20FromPeggy } from 'utils/sendFromPeggy';
 
 function ReceiverSwap() {
   const dispatch = useDispatch();
@@ -14,7 +15,8 @@ function ReceiverSwap() {
   const senderAddress = useSelector(state => state.senderAddress);
   const sendAmount = useSelector(state => state.sendAmount);
   const senderToken = useSelector(state => state.senderToken);
-  const receiveAmount = useSelector(state => state.receiveAmount);
+  const mnemonic = useSelector(state => state.mnemonic);
+  const direction = useSelector(state => state.direction);
   let disabledBtn = !(senderAddress && receiverAddress);
 
   const token = Token.find(e => e.address === senderToken);
@@ -46,12 +48,22 @@ function ReceiverSwap() {
 
   const transferERC = async () => {
     setLoadingTransfer(true);
-    // await transferERC20ToONE(
-    //   senderAddress,
-    //   senderToken,
-    //   (sendAmount * 10 ** 18).toString(),
-    //   receiverAddress
-    // );
+    if (direction) {
+      await sendErc20(
+        senderAddress,
+        (sendAmount * 10 ** 18).toString(),
+        receiverAddress,
+        token.address
+      );
+    } else {
+      await transferErc20FromPeggy(
+        mnemonic,
+        senderAddress,
+        (sendAmount * 10 ** 18).toString(),
+        token.address,
+        token.name.toLowerCase()
+      );
+    }
     dispatch(setSender(senderAddress));
     dispatch(setReceiver(receiverAddress));
     dispatch(setSendAmount(0));
@@ -63,6 +75,11 @@ function ReceiverSwap() {
 
   const transferETH = async () => {
     setLoadingTransfer(true);
+    if (direction) {
+      await sendEth(senderAddress, (sendAmount * 10 ** 18).toString(), receiverAddress);
+    } else {
+      await transferEthFromPeggy(mnemonic, senderAddress, (sendAmount * 10 ** 18).toString());
+    }
     // await transferETHToONE(senderAddress, (sendAmount * 10 ** 18).toString(), receiverAddress);
     dispatch(setSender(senderAddress));
     dispatch(setReceiver(receiverAddress));
@@ -75,17 +92,6 @@ function ReceiverSwap() {
 
   return (
     <div className='receiver-swap'>
-      {/* <Divider orientation='right'>Receiver Address:</Divider> */}
-      {/* <Row>
-        <Col span={8} offset={14}>
-          <Input
-            className='receiver-address'
-            size='large'
-            disabled={true}
-            value={receiverAddress}
-          />
-        </Col>
-      </Row> */}
       <div className='button-swap'>
         <Button
           size='large'
@@ -107,7 +113,7 @@ function ReceiverSwap() {
           <Button
             key='Approve'
             type='primary'
-            disabled={!statusApprove}
+            disabled={!statusApprove || !direction}
             loading={loadingApprove}
             onClick={() => approveERC20()}
           >
@@ -116,7 +122,7 @@ function ReceiverSwap() {
           <Button
             key='Transfer'
             type='primary'
-            disabled={!statusTransfer}
+            disabled={!statusTransfer && direction}
             loading={loadingTransfer}
             onClick={() => transferERC()}
           >
@@ -125,15 +131,27 @@ function ReceiverSwap() {
         ]}
       >
         <p>
-          {statusApprove ? 'You must approve to send ' + token.name + ' ?' : ''}
-          {statusTransfer
-            ? 'Do you want transfer ' +
-              sendAmount +
-              ' ' +
-              token.name +
-              ' to ' +
-              receiveAmount +
-              ' ONE ?'
+          {statusApprove && direction ? 'You must approve to send ' + token.name + ' ?' : ''}
+          {statusTransfer || !direction
+            ? direction
+              ? 'Do you want transfer ' +
+                sendAmount +
+                ' ' +
+                token.name +
+                ' to ' +
+                sendAmount +
+                ' ' +
+                token.name +
+                ' In PeggyChain ?'
+              : 'Do you want transfer ' +
+                sendAmount +
+                ' ' +
+                token.name +
+                ' to ' +
+                sendAmount +
+                ' ' +
+                token.name +
+                ' In Ethereum ?'
             : ''}
         </p>
       </Modal>
@@ -156,13 +174,25 @@ function ReceiverSwap() {
       >
         <p>
           {statusTransfer
-            ? 'Do you want transfer ' +
-              sendAmount +
-              ' ' +
-              token.name +
-              ' to ' +
-              receiveAmount +
-              ' ONE ?'
+            ? direction
+              ? 'Do you want transfer ' +
+                sendAmount +
+                ' ' +
+                token.name +
+                ' to ' +
+                sendAmount +
+                ' ' +
+                token.name +
+                ' In PeggyChain ?'
+              : 'Do you want transfer ' +
+                sendAmount +
+                ' ' +
+                token.name +
+                ' to ' +
+                sendAmount +
+                ' ' +
+                token.name +
+                ' In Ethereum ?'
             : ''}
         </p>
       </Modal>
