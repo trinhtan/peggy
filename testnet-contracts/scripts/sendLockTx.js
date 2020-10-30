@@ -19,7 +19,11 @@ module.exports = async () => {
    ******************************************/
   // Lock transaction default params
   const DEFAULT_COSMOS_RECIPIENT = Web3.utils.utf8ToHex(
+<<<<<<< HEAD
+    'cosmos1fqltwp92v63dpul0p3c2tm6hfuyhc9u30t9s5r'
+=======
     'cosmos1t7sej8t0530sr304lsfruh4vdunl5herazfqtr'
+>>>>>>> ed7d067dfa109a751257ca30111ff5bd70c63c61
   );
   const DEFAULT_ETH_DENOM = 'eth';
   const DEFAULT_AMOUNT = '1000';
@@ -85,7 +89,11 @@ module.exports = async () => {
   let provider;
   if (NETWORK_ROPSTEN) {
     provider = new HDWalletProvider(
+<<<<<<< HEAD
+      '8853010b27590ee6f6819be98c66b6266a848f0bd8581a92d0c9c9f179c055de',
+=======
       process.env.PRIVATE_KEY,
+>>>>>>> ed7d067dfa109a751257ca30111ff5bd70c63c61
       'https://ropsten.infura.io/v3/'.concat(process.env.INFURA_PROJECT_ID)
     );
   } else {
@@ -106,7 +114,11 @@ module.exports = async () => {
     const { logs } = await contract.deployed().then(function (instance) {
       console.log('Connected to contract, sending lock...');
       return instance.lock(cosmosRecipient, coinDenom, amount, {
+<<<<<<< HEAD
+        from: '0x784c5D4e7f668AB5eA179FB43Be1Bc6D6B2AF5F9',
+=======
         from: '0x02610D24fd42f1237c584b6A699727aBAE7cC04e',
+>>>>>>> ed7d067dfa109a751257ca30111ff5bd70c63c61
         value: coinDenom === NULL_ADDRESS ? amount : 0,
         gas: 300000 // 300,000 Gwei
       });

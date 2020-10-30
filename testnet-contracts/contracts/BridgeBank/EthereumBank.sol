@@ -113,7 +113,7 @@ contract EthereumBank {
      * @param _token: The currency type, either erc20 or ethereum.
      * @param _amount: The amount of erc20 tokens/ ethereum (in wei) to be itemized.
      */
-    function lockFunds(
+    function lockEthereumAssetFunds(
         address payable _sender,
         bytes memory _recipient,
         address _token,
@@ -126,6 +126,23 @@ contract EthereumBank {
         lockedTokenList[_symbol] = _token;
         lockedFunds[_token] = lockedFunds[_token].add(_amount);
 
+        emit LogLock(_sender, _recipient, _token, _symbol, _amount, lockBurnNonce);
+    }
+
+     /*
+     * @param _sender: The sender's ethereum address.
+     * @param _recipient: The intended recipient's cosmos address.
+     * @param _token: The currency type, erc20 address presenting cosmos asset.
+     * @param _amount: The amount of erc20 address presenting cosmos asset.
+     */
+    function lockCosmosAssetFunds(
+        address payable _sender,
+        bytes memory _recipient,
+        address _token,
+        string memory _symbol,
+        uint256 _amount
+    ) internal {
+        lockBurnNonce = lockBurnNonce.add(1);
         emit LogLock(_sender, _recipient, _token, _symbol, _amount, lockBurnNonce);
     }
 

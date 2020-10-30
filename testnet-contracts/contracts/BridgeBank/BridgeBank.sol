@@ -4,6 +4,7 @@ import "./CosmosBank.sol";
 import "./EthereumBank.sol";
 import "../Oracle.sol";
 import "../CosmosBridge.sol";
+import "../../../node_modules/openzeppelin-solidity/contracts/math/SafeMath.sol";
 
 
 /**
@@ -21,6 +22,7 @@ contract BridgeBank is CosmosBank, EthereumBank {
     address public operator;
     Oracle public oracle;
     CosmosBridge public cosmosBridge;
+    mapping(address => bool) public isCosmosAsset;
 
     /*
      * @dev: Constructor, sets operator
@@ -82,7 +84,9 @@ contract BridgeBank is CosmosBank, EthereumBank {
         onlyCosmosBridge
         returns (address)
     {
-        return deployNewBridgeToken(_symbol);
+        address tokenAddress = deployNewBridgeToken(_symbol);
+        isCosmosAsset[tokenAddress] = true;
+        return tokenAddress;
     }
 
     /*
@@ -152,21 +156,31 @@ contract BridgeBank is CosmosBank, EthereumBank {
                 "The transactions value must be equal the specified amount (in wei)"
             );
             symbol = "ETH";
+            lockEthereumAssetFunds(msg.sender, _recipient, _token, symbol, _amount);
         // ERC20 deposit
         } else {
-            require(
-                BridgeToken(_token).transferFrom(
-                    msg.sender,
-                    address(this),
-                    _amount
-                ),
-                "Contract token allowances insufficient to complete this lock request"
-            );
             // Set symbol to the ERC20 token's symbol
             symbol = BridgeToken(_token).symbol();
-        }
 
-        lockFunds(msg.sender, _recipient, _token, symbol, _amount);
+            if(isCosmosAsset[_token]) {
+                require(BridgeToken(_token).balanceOf(msg.sender) >= _amount,  "Contract token allowances insufficient to complete this lock request");
+                BridgeToken(_token).burnFrom(
+                    msg.sender,
+                    _amount
+                );
+                lockCosmosAssetFunds(msg.sender, _recipient, _token, symbol, _amount);
+            } else {
+                require(
+                    BridgeToken(_token).transferFrom(
+                        msg.sender,
+                        address(this),
+                        _amount
+                    ),
+                    "Contract token allowances insufficient to complete this lock request"
+                );
+                lockEthereumAssetFunds(msg.sender, _recipient, _token, symbol, _amount);
+            }
+        }
     }
 
     /*
@@ -231,4 +245,12 @@ contract BridgeBank is CosmosBank, EthereumBank {
     {
         return getCosmosDeposit(_id);
     }
+
+    function checkIsCosmosAsset(address _token) public view returns (bool) {
+        if(isCosmosAsset[_token]){
+            return true;
+        }
+        return false;
+    }
+
 }

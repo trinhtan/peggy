@@ -37,7 +37,11 @@ ebcli keys add validator --output json > validator.json
 ebcli keys add testuser --output json > testuser.json
 
 # Initialize the genesis account and transaction
+<<<<<<< HEAD
+ebd add-genesis-account $(ebcli keys show validator -a) 1000000000000000000000000000stake,1000000000000000000000000000atom
+=======
 ebd add-genesis-account $(ebcli keys show validator -a) 1000000000000000000000000000stake,1000000000atom
+>>>>>>> ed7d067dfa109a751257ca30111ff5bd70c63c61
 
 # Create genesis transaction
 ebd gentx --name validator --keyring-backend test
@@ -61,7 +65,7 @@ ebd start
 
 ```
 
-ebcli tx send validator \$(ebcli keys show testuser -a) 10stake --yes
+ebcli tx send validator \$(ebcli keys show testuser -a) 10000000000000000000stake --yes
 yarn peggy:all
 
 ```
@@ -71,7 +75,7 @@ Kiểm tra địa chỉ của các smart contract
 ```
 
 cd testnet-contracts
-truffle metwork
+truffle network
 
 ```
 
