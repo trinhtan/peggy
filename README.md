@@ -1,3 +1,15 @@
+<!-- @format -->
+
+<h1 align="center">Welcome to GoldenStarSwap 👋</h1>
+<p>
+  <img src="https://img.shields.io/badge/version-1.0-blue.svg?cacheSeconds=2592000" />
+</p>
+# Architecture
+
+<img src="./Hackatom.png" title="PeggyChain" />
+
+# Setup
+
 ### 1. Make tool
 
 In the project root directory
