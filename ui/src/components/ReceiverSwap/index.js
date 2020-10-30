@@ -7,7 +7,7 @@ import {
   setReceiver,
   setSendAmount,
   setReceiverBalance,
-  getSenderBal
+  getSenderBal,
 } from '../../store/actions';
 import Token from 'constants/Token.js';
 import './index.css';
@@ -18,15 +18,15 @@ import useInterval from 'utils/useInterval';
 function ReceiverSwap() {
   const dispatch = useDispatch();
 
-  const receiverAddress = useSelector(state => state.receiverAddress);
-  const senderAddress = useSelector(state => state.senderAddress);
-  const sendAmount = useSelector(state => state.sendAmount);
-  const senderToken = useSelector(state => state.senderToken);
-  const mnemonic = useSelector(state => state.mnemonic);
-  const direction = useSelector(state => state.direction);
+  const receiverAddress = useSelector((state) => state.receiverAddress);
+  const senderAddress = useSelector((state) => state.senderAddress);
+  const sendAmount = useSelector((state) => state.sendAmount);
+  const senderToken = useSelector((state) => state.senderToken);
+  const mnemonic = useSelector((state) => state.mnemonic);
+  const direction = useSelector((state) => state.direction);
   let disabledBtn = !(senderAddress && receiverAddress);
 
-  const token = Token.find(e => e.address === senderToken);
+  const token = Token.find((e) => e.address === senderToken);
 
   const [loadingApprove, setLoadingApprove] = useState(false);
   const [statusApprove, setStatusApprove] = useState(true);
@@ -38,6 +38,7 @@ function ReceiverSwap() {
 
   useInterval(async () => {
     const cosmosBal = await getBalancePeggy(receiverAddress, token.name.toLowerCase());
+    console.log('test', cosmosBal);
     dispatch(setReceiverBalance(cosmosBal / 1e18));
     dispatch(getSenderBal(token.address));
   }, 5000);
@@ -140,7 +141,7 @@ function ReceiverSwap() {
             onClick={() => transferERC()}
           >
             Transfer
-          </Button>
+          </Button>,
         ]}
       >
         <p>
@@ -182,7 +183,7 @@ function ReceiverSwap() {
             onClick={() => transferETH()}
           >
             Transfer
-          </Button>
+          </Button>,
         ]}
       >
         <p>

@@ -14,17 +14,17 @@ const openNotification = (message, description) => {
     description: description,
     onClick: () => {
       console.log('Notification Clicked!');
-    }
+    },
   });
 };
-export const connectMetamask = async isSender => {
+export const connectMetamask = async (isSender) => {
   // this returns the provider, or null if it wasn't detected
   const provider = await detectEthereumProvider();
   const ethereum = window.ethereum;
   const web3 = new Web3(window.ethereum);
   let network = await web3.eth.net.getNetworkType();
-  if (network !== 'ropsten') {
-    openNotification('Network fail', 'Please change to Ropsten testnet');
+  if (network !== 'rinkeby') {
+    openNotification('Network fail', 'Please change to Rinkeby testnet');
     return;
   }
   if (provider) {
@@ -68,7 +68,7 @@ export const connectMetamask = async isSender => {
   ethereum
     .request({ method: 'eth_accounts' })
     .then(handleAccountsChanged)
-    .catch(err => {
+    .catch((err) => {
       // Some unexpected error.
       // For backwards compatibility reasons, if no accounts are available,
       // eth_accounts will return an empty array.
@@ -109,7 +109,7 @@ export const connectMetamask = async isSender => {
     ethereum
       .request({ method: 'eth_requestAccounts' })
       .then(handleAccountsChanged)
-      .catch(err => {
+      .catch((err) => {
         if (err.code === 4001) {
           // EIP-1193 userRejectedRequest error
           // If this happens, the user rejected the connection request.

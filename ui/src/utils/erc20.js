@@ -35,7 +35,7 @@ export const balanceOf = async (tokenAddress, walletAddress) => {
 export const approve = async (walletAddress, tokenAddress, amount) => {
   const web3 = new Web3(window.ethereum);
   const erc20 = new web3.eth.Contract(ERC20.abi, tokenAddress);
-  let ethBridgeBankAddress = BridgeBank.networks['3'].address;
+  let ethBridgeBankAddress = BridgeBank.networks['4'].address;
   await erc20.methods.approve(ethBridgeBankAddress, amount).send({ from: walletAddress });
 };
 

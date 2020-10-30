@@ -7,12 +7,12 @@ import { balanceOf } from 'utils/erc20';
 // };
 
 export const SET_SENDER = 'SET_SENDER';
-export const setSender = address => async (dispatch, getState) => {
+export const setSender = (address) => async (dispatch, getState) => {
   const state = getState();
   const senderToken = state.senderToken;
   dispatch({
     type: SET_SENDER,
-    address
+    address,
   });
   if (address) {
     let balance = await balanceOf(senderToken, address);
@@ -21,7 +21,7 @@ export const setSender = address => async (dispatch, getState) => {
 };
 
 export const SET_RECEIVER = 'SET_RECEIVER';
-export const setReceiver = address => async dispatch => {
+export const setReceiver = (address) => async (dispatch) => {
   dispatch({ type: SET_RECEIVER, address });
   // if (address) {
   //   let res = await hmy.blockchain.getBalance({ address: address });
@@ -31,7 +31,7 @@ export const setReceiver = address => async dispatch => {
 };
 
 export const SET_WEB3 = 'SET_WEB3';
-export const setWeb3 = web3 => async dispatch => {
+export const setWeb3 = (web3) => async (dispatch) => {
   dispatch({ type: SET_WEB3, web3 });
 };
 
@@ -49,12 +49,12 @@ export const setSenderToken = (tokenAddress, oracleAddress) => async (dispatch, 
 };
 
 export const SET_SENDER_BALANCE = 'SET_SENDER_BALANCE';
-export const setSenderBalance = balance => async dispatch => {
+export const setSenderBalance = (balance) => async (dispatch) => {
   let newBalance = (balance / 10 ** 18).toFixed(2);
   dispatch({ type: SET_SENDER_BALANCE, balance: newBalance });
 };
 
-export const getSenderBal = tokenAddress => async (dispatch, getState) => {
+export const getSenderBal = (tokenAddress) => async (dispatch, getState) => {
   const state = getState();
   const senderAddress = state.senderAddress;
   let newBal = await balanceOf(tokenAddress, senderAddress);
@@ -62,14 +62,14 @@ export const getSenderBal = tokenAddress => async (dispatch, getState) => {
 };
 
 export const SET_RECEIVER_BALANCE = 'SET_RECEIVER_BALANCE';
-export const setReceiverBalance = balance => async dispatch => {
+export const setReceiverBalance = (balance) => async (dispatch) => {
   let newBal = parseFloat(balance).toFixed(2);
   dispatch({ type: SET_RECEIVER_BALANCE, balance: newBal });
 };
 
 export const SET_SEND_AMOUNT = 'SET_SEND_AMOUNT';
 export const SET_RECEIVE_AMOUNT = 'SET_RECEIVE_AMOUNT';
-export const setSendAmount = sendAmount => async dispatch => {
+export const setSendAmount = (sendAmount) => async (dispatch) => {
   dispatch({ type: SET_RECEIVE_AMOUNT, receiveAmount: parseFloat(sendAmount).toFixed(3) });
   dispatch({ type: SET_SEND_AMOUNT, sendAmount: parseFloat(sendAmount).toFixed(3) });
 };
@@ -81,6 +81,6 @@ export const changeDirection = () => async (dispatch, getState) => {
 };
 
 export const SET_MNEMONIC = 'SET_MNEMONIC';
-export const setMnemonicAction = mnemonic => async dispatch => {
+export const setMnemonicAction = (mnemonic) => async (dispatch) => {
   dispatch({ type: SET_MNEMONIC, mnemonic });
 };

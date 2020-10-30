@@ -2,8 +2,8 @@ const launchpad = require('@cosmjs/launchpad');
 const axios = require('axios');
 const API = 'http://localhost:1317';
 const PEGGY_CHAIN_ID = 'peggy';
-const ETHEREUM_CHAIN_ID = '3';
-const BRIDGE_REGISTRY_CONTRACT_ADDRESS = '0x22B5DB062B42d7D090fff36d1C44764283F3bD6B';
+const ETHEREUM_CHAIN_ID = '4';
+const BRIDGE_REGISTRY_CONTRACT_ADDRESS = '0xef16E53EB12628B80c1d93608eEd997cB8fdb018';
 const ETHEREUM_TOKEN_CONTRACT_ADDRESS = '0x0000000000000000000000000000000000000000';
 const ETH_SYMBOL = 'eth';
 
@@ -25,7 +25,7 @@ exports.transferEthFromPeggy = async (mnemonic, ethAddress, amount) => {
       cosmos_sender: address,
       ethereum_receiver: ethAddress,
       amount: amount,
-      symbol: ETH_SYMBOL
+      symbol: ETH_SYMBOL,
     };
 
     const req = { base_req, ...body };
@@ -64,7 +64,7 @@ exports.transferErc20FromPeggy = async function (
       cosmos_sender: address,
       ethereum_receiver: ethereumReceiver,
       amount: amount,
-      symbol: symbol
+      symbol: symbol,
     };
 
     const req = { base_req, ...body };
@@ -81,7 +81,7 @@ exports.getBalancePeggy = async (cosmosAddress, symbol) => {
   if (!cosmosAddress) return 0;
   try {
     const { data } = await axios.get(`${API}/bank/balances/${cosmosAddress}`);
-    const res = data.result.find(e => e.denom === symbol);
+    const res = data.result.find((e) => e.denom === symbol);
     console.log(res.amount);
     return res.amount;
   } catch (e) {

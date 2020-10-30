@@ -6,7 +6,7 @@ const Web3 = require('web3');
 const web3 = new Web3('https://ropsten.infura.io/v3/' + process.env.INFURA_PROJECT_ID);
 
 const BridgeBank = require('../build/contracts/BridgeBank.json');
-const BridgeBankAddress = BridgeBank.networks['3'].address;
+const BridgeBankAddress = BridgeBank.networks['4'].address;
 const BridgeBankContract = new web3.eth.Contract(BridgeBank.abi, BridgeBankAddress);
 
 const getTokenAddress = async function (symbol) {
