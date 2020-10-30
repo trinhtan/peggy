@@ -262,7 +262,7 @@ exports.transferLocalAssetFromCosmosToEthereum = async function (
 // this.transferETHFromCosmosToEthereum(
 //   'inherit control solar genius diet grape cake absurd can donor solve half today swim poverty door code differ clump hour neither prize foster police',
 //   ETHEREUM_RECEIVER,
-//   '500'
+//   '1000'
 // );
 
 // this.newAccount();
@@ -277,7 +277,7 @@ exports.transferLocalAssetFromCosmosToEthereum = async function (
 // this.transferERC20FromCosmosToEthereum(
 //   'inherit control solar genius diet grape cake absurd can donor solve half today swim poverty door code differ clump hour neither prize foster police',
 //   ETHEREUM_RECEIVER,
-//   '1000',
+//   '1400',
 //   DAI_TOKEN_CONTRACT_ADDRESS,
 //   'dai'
 // );

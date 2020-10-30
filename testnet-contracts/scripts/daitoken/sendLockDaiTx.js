@@ -10,7 +10,7 @@ module.exports = async () => {
   const contract = truffleContract(require('../../build/contracts/BridgeBank.json'));
   const daiJSON = require('./dai.json');
 
-  const DAI_ADDRESS = '0xad6d458402f60fd3bd25163575031acdce07538d';
+  const DAI_ADDRESS = '0x3b5736bfff4448e2a6137b4d8ea19382b53e6f72';
 
   /*******************************************
    *** Constants
