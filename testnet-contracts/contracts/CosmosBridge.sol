@@ -151,12 +151,19 @@ contract CosmosBridge {
         address tokenAddress;
         string memory symbol;
         if (_claimType == ClaimType.Burn) {
-            require(
-                bridgeBank.getLockedFunds(_symbol) >= _amount,
-                "Not enough locked assets to complete the proposed prophecy"
-            );
             symbol = _symbol;
-            tokenAddress = bridgeBank.getLockedTokenAddress(_symbol);
+            tokenAddress = bridgeBank.getLockedTokenAddress(symbol);
+            if(tokenAddress == address(0) && keccak256(abi.encodePacked((symbol))) != keccak256(abi.encodePacked(("ETH")))){
+                tokenAddress = bridgeBank.getBridgeToken(symbol);
+                if(tokenAddress == address(0)){
+                    tokenAddress = bridgeBank.createNewBridgeToken(symbol);
+                }
+            } else {
+                require(
+                    bridgeBank.getLockedFunds(_symbol) >= _amount,
+                    "Not enough locked assets to complete the proposed prophecy"
+                );
+            }
         } else if (_claimType == ClaimType.Lock) {
             // symbol = concat(COSMOS_NATIVE_ASSET_PREFIX, _symbol); // Add 'PEGGY' symbol prefix
             symbol = _symbol;
@@ -218,8 +225,13 @@ contract CosmosBridge {
         prophecyClaims[_prophecyID].status = Status.Success;
 
         ClaimType claimType = prophecyClaims[_prophecyID].claimType;
+
         if (claimType == ClaimType.Burn) {
-            unlockTokens(_prophecyID);
+            if (!bridgeBank.checkIsCosmosAsset(prophecyClaims[_prophecyID].tokenAddress)){
+                unlockTokens(_prophecyID);
+            }else {
+                issueBridgeTokens(_prophecyID);
+            }
         } else {
             issueBridgeTokens(_prophecyID);
         }

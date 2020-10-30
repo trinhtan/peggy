@@ -20,4 +20,4 @@ const getTokenAddress = async function (symbol) {
   }
 };
 
-getTokenAddress("PEGGYSTAKE");
+getTokenAddress('STAKE');

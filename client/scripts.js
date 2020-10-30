@@ -17,7 +17,7 @@ const ETH_SYMBOL = 'eth';
 const ETHEREUM_CHAIN_ID = '3';
 
 const ETHEREUM_SENDER = '0x8f287eA4DAD62A3A626942d149509D6457c2516C';
-const ETHEREUM_RECEIVER = '0xf68F0c27D90bDcde125724D390fF75b3635FF0Ab';
+const ETHEREUM_RECEIVER = '0x02610D24fd42f1237c584b6A699727aBAE7cC04e';
 
 const validator = require('../validator.json');
 const testuser = require('../testuser.json');
@@ -86,13 +86,14 @@ exports.transferETHFromCosmosToEthereum = async function (mnemonic, ethereumRece
       cosmos_sender: address,
       ethereum_receiver: ethereumReceiver,
       amount: amount,
-      symbol: PEGGY_PREFIX + ETH_SYMBOL
+      symbol: ETH_SYMBOL
     };
 
     const req = { base_req, ...body };
     const { data } = await axios.post(`${API}/ethbridge/burn`, req);
     const { msg, fee, memo } = data.value;
-    return await client.signAndPost(msg, fee, memo);
+    let tx = await client.signAndPost(msg, fee, memo);
+    console.log(tx);
   } catch (error) {
     console.log('Transfer ETH from Cosmos to Ethereum fail! ', error);
   }
@@ -224,7 +225,8 @@ exports.transferLocalAssetFromCosmosToEthereum = async function (
     );
 
     let [{ address }] = await wallet.getAccounts();
-
+    let account = await wallet.getAccounts();
+    console.log('address', account);
     let client = new launchpad.SigningCosmosClient(API, address, wallet);
     let base_req = { chain_id: PEGGY_CHAIN_ID, from: address };
 
@@ -239,9 +241,10 @@ exports.transferLocalAssetFromCosmosToEthereum = async function (
     };
 
     const req = { base_req, ...body };
-    const { data } = await axios.post(`${API}/ethbridge/lock`, req);
+    const { data } = await axios.post(`${API}/ethbridge/burn`, req);
     const { msg, fee, memo } = data.value;
-    return await client.signAndPost(msg, fee, memo);
+    let tx = await client.signAndPost(msg, fee, memo);
+    console.log(tx);
   } catch (error) {
     console.log('Transfer ETH from Cosmos to Ethereum fail! ', error);
   }
@@ -257,7 +260,11 @@ exports.transferLocalAssetFromCosmosToEthereum = async function (
 // );
 
 // this.transferETHFromCosmosToEthereum(
+<<<<<<< HEAD
 //   'village blue fox clinic canoe health common surge divorce cluster firm carpet manage keep captain sword issue door hurdle wait leg bridge just snow',
+=======
+//   'inherit control solar genius diet grape cake absurd can donor solve half today swim poverty door code differ clump hour neither prize foster police',
+>>>>>>> ceb399b017e3a4da14e0c4bf200de1024a9b8985
 //   ETHEREUM_RECEIVER,
 //   '1000'
 // );
@@ -272,7 +279,11 @@ exports.transferLocalAssetFromCosmosToEthereum = async function (
 // );
 
 // this.transferERC20FromCosmosToEthereum(
+<<<<<<< HEAD
 //   'village blue fox clinic canoe health common surge divorce cluster firm carpet manage keep captain sword issue door hurdle wait leg bridge just snow',
+=======
+//   'inherit control solar genius diet grape cake absurd can donor solve half today swim poverty door code differ clump hour neither prize foster police',
+>>>>>>> ceb399b017e3a4da14e0c4bf200de1024a9b8985
 //   ETHEREUM_RECEIVER,
 //   '1400',
 //   DAI_TOKEN_CONTRACT_ADDRESS,
@@ -280,9 +291,15 @@ exports.transferLocalAssetFromCosmosToEthereum = async function (
 // );
 
 this.transferLocalAssetFromCosmosToEthereum(
+<<<<<<< HEAD
   'village blue fox clinic canoe health common surge divorce cluster firm carpet manage keep captain sword issue door hurdle wait leg bridge just snow',
   ETHEREUM_RECEIVER,
   '700',
+=======
+  'gate brief price material permit wedding announce little scare utility urban hen buzz diagram rocket tomato mammal speak infant round month bike pulp thunder',
+  ETHEREUM_RECEIVER,
+  '1000000000000000000',
+>>>>>>> ceb399b017e3a4da14e0c4bf200de1024a9b8985
   DAI_TOKEN_CONTRACT_ADDRESS,
   'stake'
 );
