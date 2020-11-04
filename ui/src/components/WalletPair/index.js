@@ -13,18 +13,17 @@ const bip39 = require('bip39');
 
 function WalletPair() {
   const dispatch = useDispatch();
-  const senderAddress = useSelector((state) => state.senderAddress);
-  const receiverAddress = useSelector((state) => state.receiverAddress);
-  const senderBalance = useSelector((state) => state.senderBalance);
-  const receiverBalance = useSelector((state) => state.receiverBalance);
-  const senderToken = useSelector((state) => state.senderToken);
-  const token = Token.find((e) => e.address === senderToken);
+  const senderAddress = useSelector(state => state.senderAddress);
+  const receiverAddress = useSelector(state => state.receiverAddress);
+  const senderBalance = useSelector(state => state.senderBalance);
+  const receiverBalance = useSelector(state => state.receiverBalance);
+  const senderToken = useSelector(state => state.senderToken);
+  const token = Token.find(e => e.address === senderToken);
 
   const [mnemonic, setMnemonic] = useState('');
   const [newMnemonic, setNewMnemonic] = useState('');
   const [insertMnemonicVisible, setInsertMnemonicVisible] = useState(false);
   const [newMnemonicVisible, setNewMnemonicVisible] = useState(false);
-  const [loading, setLoading] = useState(true);
 
   const loginPeggy = () => {
     setInsertMnemonicVisible(true);
@@ -58,7 +57,7 @@ function WalletPair() {
     setInsertMnemonicVisible(true);
   };
 
-  const insertMnemonic = (e) => {
+  const insertMnemonic = e => {
     setMnemonic(e.target.value);
   };
 
@@ -109,7 +108,7 @@ function WalletPair() {
           </Button>,
           <Button key='Oke' type='primary' onClick={handleInsertMnemonicOk}>
             Oke
-          </Button>,
+          </Button>
         ]}
       >
         <p>Fill your mnemonic:</p>
