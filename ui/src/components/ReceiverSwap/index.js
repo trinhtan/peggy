@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 // import { Button, Input, Col, Row, Divider } from 'antd';
 import { Button, Modal } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
@@ -7,7 +7,7 @@ import {
   setReceiver,
   setSendAmount,
   setReceiverBalance,
-  getSenderBal,
+  getSenderBal
 } from '../../store/actions';
 import Token from 'constants/Token.js';
 import './index.css';
@@ -18,15 +18,16 @@ import useInterval from 'utils/useInterval';
 function ReceiverSwap() {
   const dispatch = useDispatch();
 
-  const receiverAddress = useSelector((state) => state.receiverAddress);
-  const senderAddress = useSelector((state) => state.senderAddress);
-  const sendAmount = useSelector((state) => state.sendAmount);
-  const senderToken = useSelector((state) => state.senderToken);
-  const mnemonic = useSelector((state) => state.mnemonic);
-  const direction = useSelector((state) => state.direction);
+  const receiverAddress = useSelector(state => state.receiverAddress);
+  const senderAddress = useSelector(state => state.senderAddress);
+  const sendAmount = useSelector(state => state.sendAmount);
+  const senderToken = useSelector(state => state.senderToken);
+  const mnemonic = useSelector(state => state.mnemonic);
+  const direction = useSelector(state => state.direction);
+  const senderBalance = useSelector(state => state.senderBalance);
   let disabledBtn = !(senderAddress && receiverAddress);
 
-  const token = Token.find((e) => e.address === senderToken);
+  const token = Token.find(e => e.address === senderToken);
 
   const [loadingApprove, setLoadingApprove] = useState(false);
   const [statusApprove, setStatusApprove] = useState(true);
@@ -35,6 +36,10 @@ function ReceiverSwap() {
   const [visibleERC, setVisibleERC] = useState(false);
   const [visibleETH, setVisibleETH] = useState(false);
   const [loadingTransfer, setLoadingTransfer] = useState(false);
+
+  useEffect(() => {
+    setLoadingTransfer(true);
+  }, [senderBalance]);
 
   useInterval(async () => {
     const cosmosBal = await getBalCosmos(receiverAddress, token.name.toLowerCase());
@@ -83,7 +88,9 @@ function ReceiverSwap() {
     setVisibleERC(false);
     setStatusApprove(true);
     setStatusTransfer(false);
-    setLoadingTransfer(false);
+    if (direction) {
+      setLoadingTransfer(false);
+    }
   };
 
   const transferETH = async () => {
@@ -100,7 +107,9 @@ function ReceiverSwap() {
     setVisibleETH(false);
     setStatusApprove(true);
     setStatusTransfer(false);
-    setLoadingTransfer(false);
+    if (direction) {
+      setLoadingTransfer(false);
+    }
   };
 
   return (
@@ -140,7 +149,7 @@ function ReceiverSwap() {
             onClick={() => transferERC()}
           >
             Transfer
-          </Button>,
+          </Button>
         ]}
       >
         <p>
@@ -182,7 +191,7 @@ function ReceiverSwap() {
             onClick={() => transferETH()}
           >
             Transfer
-          </Button>,
+          </Button>
         ]}
       >
         <p>
