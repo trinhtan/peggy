@@ -7,7 +7,7 @@ import {
   setReceiver,
   setSendAmount,
   setReceiverBalance,
-  getSenderBal
+  getSenderBal,
 } from '../../store/actions';
 import Token from 'constants/Token.js';
 import './index.css';
@@ -18,16 +18,16 @@ import useInterval from 'utils/useInterval';
 function ReceiverSwap() {
   const dispatch = useDispatch();
 
-  const receiverAddress = useSelector(state => state.receiverAddress);
-  const senderAddress = useSelector(state => state.senderAddress);
-  const sendAmount = useSelector(state => state.sendAmount);
-  const senderToken = useSelector(state => state.senderToken);
-  const mnemonic = useSelector(state => state.mnemonic);
-  const direction = useSelector(state => state.direction);
-  const senderBalance = useSelector(state => state.senderBalance);
+  const receiverAddress = useSelector((state) => state.receiverAddress);
+  const senderAddress = useSelector((state) => state.senderAddress);
+  const sendAmount = useSelector((state) => state.sendAmount);
+  const senderToken = useSelector((state) => state.senderToken);
+  const mnemonic = useSelector((state) => state.mnemonic);
+  const direction = useSelector((state) => state.direction);
+  const senderBalance = useSelector((state) => state.senderBalance);
   let disabledBtn = !(senderAddress && receiverAddress);
 
-  const token = Token.find(e => e.address === senderToken);
+  const token = Token.find((e) => e.address === senderToken);
 
   const [loadingApprove, setLoadingApprove] = useState(false);
   const [statusApprove, setStatusApprove] = useState(true);
@@ -38,7 +38,11 @@ function ReceiverSwap() {
   const [loadingTransfer, setLoadingTransfer] = useState(false);
 
   useEffect(() => {
-    setLoadingTransfer(true);
+    setLoadingTransfer(false);
+    setVisibleERC(false);
+    setVisibleETH(false);
+    dispatch(setSendAmount(0));
+    setStatusTransfer(false);
   }, [senderBalance]);
 
   useInterval(async () => {
@@ -84,12 +88,13 @@ function ReceiverSwap() {
     }
     dispatch(setSender(senderAddress));
     dispatch(setReceiver(receiverAddress));
-    dispatch(setSendAmount(0));
-    setVisibleERC(false);
     setStatusApprove(true);
-    setStatusTransfer(false);
+
     if (direction) {
+      setVisibleERC(false);
       setLoadingTransfer(false);
+      dispatch(setSendAmount(0));
+      setStatusTransfer(false);
     }
   };
 
@@ -103,12 +108,14 @@ function ReceiverSwap() {
     // await transferETHToONE(senderAddress, (sendAmount * 10 ** 18).toString(), receiverAddress);
     dispatch(setSender(senderAddress));
     dispatch(setReceiver(receiverAddress));
-    dispatch(setSendAmount(0));
-    setVisibleETH(false);
+
     setStatusApprove(true);
-    setStatusTransfer(false);
+
     if (direction) {
+      setVisibleETH(false);
       setLoadingTransfer(false);
+      dispatch(setSendAmount(0));
+      setStatusTransfer(false);
     }
   };
 
@@ -149,7 +156,7 @@ function ReceiverSwap() {
             onClick={() => transferERC()}
           >
             Transfer
-          </Button>
+          </Button>,
         ]}
       >
         <p>
@@ -191,7 +198,7 @@ function ReceiverSwap() {
             onClick={() => transferETH()}
           >
             Transfer
-          </Button>
+          </Button>,
         ]}
       >
         <p>
