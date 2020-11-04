@@ -12,7 +12,7 @@ import {
 import Token from 'constants/Token.js';
 import './index.css';
 import { sendEth, sendErc20, approve } from 'utils/sendFromEth';
-import { transferEthFromPeggy, transferErc20FromPeggy, getBalancePeggy } from 'utils/sendFromPeggy';
+import { transferErc20FromPeggy, transferEthFromPeggy, getBalCosmos } from 'utils/sendFromPeggy';
 import useInterval from 'utils/useInterval';
 
 function ReceiverSwap() {
@@ -37,8 +37,7 @@ function ReceiverSwap() {
   const [loadingTransfer, setLoadingTransfer] = useState(false);
 
   useInterval(async () => {
-    const cosmosBal = await getBalancePeggy(receiverAddress, token.name.toLowerCase());
-    console.log('test', cosmosBal);
+    const cosmosBal = await getBalCosmos(receiverAddress, token.name.toLowerCase());
     dispatch(setReceiverBalance(cosmosBal / 1e18));
     dispatch(getSenderBal(token.address));
   }, 5000);

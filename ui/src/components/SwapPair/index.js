@@ -10,22 +10,22 @@ const { Option } = Select;
 
 function SwapPair() {
   const dispatch = useDispatch();
-  const senderBalance = useSelector(state => state.senderBalance);
-  const receiveAmount = useSelector(state => state.receiveAmount);
-  const sendAmount = useSelector(state => state.sendAmount);
-  const direction = useSelector(state => state.direction);
-  const receiverBalance = useSelector(state => state.receiverBalance);
+  const senderBalance = useSelector((state) => state.senderBalance);
+  const receiveAmount = useSelector((state) => state.receiveAmount);
+  const sendAmount = useSelector((state) => state.sendAmount);
+  const direction = useSelector((state) => state.direction);
+  const receiverBalance = useSelector((state) => state.receiverBalance);
 
   const [tokenSelected, setTokenSelected] = useState('LINK');
 
-  const changeToken = value => {
-    let tokenSender = Token.find(e => e.name === value);
+  const changeToken = (value) => {
+    let tokenSender = Token.find((e) => e.name === value);
     console.log(tokenSender.address);
     setTokenSelected(value);
     dispatch(setSenderToken(tokenSender.address, tokenSender.oracleAddress));
   };
 
-  const changeAmout = value => {
+  const changeAmout = (value) => {
     dispatch(setSendAmount(value));
   };
 
@@ -59,7 +59,7 @@ function SwapPair() {
                 <InputNumber
                   style={{
                     width: 250,
-                    textAlign: 'center'
+                    textAlign: 'center',
                   }}
                   onChange={changeAmout}
                   size='large'
@@ -106,7 +106,7 @@ function SwapPair() {
                 <InputNumber
                   style={{
                     width: 250,
-                    textAlign: 'center'
+                    textAlign: 'center',
                   }}
                   onChange={changeAmout}
                   step='0.001'

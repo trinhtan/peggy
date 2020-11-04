@@ -9,24 +9,28 @@ import mathWallet from 'icons/cosmos.png';
 import { setReceiver, setMnemonicAction } from 'store/actions';
 import * as launchpad from '@cosmjs/launchpad';
 import './index.css';
+const bip39 = require('bip39');
 
 function WalletPair() {
   const dispatch = useDispatch();
-  const senderAddress = useSelector(state => state.senderAddress);
-  const receiverAddress = useSelector(state => state.receiverAddress);
-  const senderBalance = useSelector(state => state.senderBalance);
-  const receiverBalance = useSelector(state => state.receiverBalance);
-  const senderToken = useSelector(state => state.senderToken);
-  const token = Token.find(e => e.address === senderToken);
+  const senderAddress = useSelector((state) => state.senderAddress);
+  const receiverAddress = useSelector((state) => state.receiverAddress);
+  const senderBalance = useSelector((state) => state.senderBalance);
+  const receiverBalance = useSelector((state) => state.receiverBalance);
+  const senderToken = useSelector((state) => state.senderToken);
+  const token = Token.find((e) => e.address === senderToken);
 
   const [mnemonic, setMnemonic] = useState('');
-  const [visible, setVisible] = useState(false);
+  const [newMnemonic, setNewMnemonic] = useState('');
+  const [insertMnemonicVisible, setInsertMnemonicVisible] = useState(false);
+  const [newMnemonicVisible, setNewMnemonicVisible] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const loginPeggy = () => {
-    setVisible(true);
+    setInsertMnemonicVisible(true);
   };
-  const handleOk = async () => {
-    console.log('ok');
+
+  const handleInsertMnemonicOk = async () => {
     try {
       dispatch(setMnemonicAction(mnemonic));
       let wallet = await launchpad.Secp256k1Wallet.fromMnemonic(
@@ -39,17 +43,30 @@ function WalletPair() {
 
       let account = await wallet.getAccounts();
       console.log('account', account);
-      setVisible(false);
+      setInsertMnemonicVisible(false);
     } catch (e) {
       console.error(e);
     }
   };
-  const handleCancel = () => {
-    console.log('cancel');
-    setVisible(false);
+
+  const handleInsertMnemonicCancel = () => {
+    setInsertMnemonicVisible(false);
   };
-  const insertMnemonic = e => {
+
+  const handleNewMnemonicCancel = () => {
+    setNewMnemonicVisible(false);
+    setInsertMnemonicVisible(true);
+  };
+
+  const insertMnemonic = (e) => {
     setMnemonic(e.target.value);
+  };
+
+  const genNewMnemonic = () => {
+    let mnem = bip39.generateMnemonic();
+    setNewMnemonic(mnem);
+    setInsertMnemonicVisible(false);
+    setNewMnemonicVisible(true);
   };
 
   let sender;
@@ -82,9 +99,29 @@ function WalletPair() {
 
   return (
     <div className='wallet-pair'>
-      <Modal title='Insert Mnemonic' visible={visible} onOk={handleOk} onCancel={handleCancel}>
+      <Modal
+        title='Insert Mnemonic'
+        visible={insertMnemonicVisible}
+        onCancel={handleInsertMnemonicCancel}
+        footer={[
+          <Button key='NewMnemonic' onClick={genNewMnemonic}>
+            New Mnemonic
+          </Button>,
+          <Button key='Oke' type='primary' onClick={handleInsertMnemonicOk}>
+            Oke
+          </Button>,
+        ]}
+      >
         <p>Fill your mnemonic:</p>
         <Input placeholder='Basic usage' onChange={insertMnemonic} />
+      </Modal>
+      <Modal
+        title='Please copy and store it safely!'
+        visible={newMnemonicVisible}
+        onCancel={handleNewMnemonicCancel}
+        footer={[]}
+      >
+        <p>{newMnemonic}</p>
       </Modal>
       <Row gutter={[8, 8]}>
         <Col span={9} className='wallet-left'>
